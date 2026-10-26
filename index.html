@@ -1,0 +1,3168 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="default">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IELTS Pathway — Free Bilingual IELTS & Spoken English Learning Platform</title>
+  <!-- Prevent Flash of Incorrect Theme before first paint -->
+  <script>
+    (function () {
+      try {
+        var savedTheme = localStorage.getItem('ielts_pathway_theme');
+        if (!savedTheme) {
+          var rawState = localStorage.getItem('ielts_pathway_state_v1');
+          if (rawState) {
+            var parsed = JSON.parse(rawState);
+            if (parsed && (parsed.theme === 'default' || parsed.theme === 'white' || parsed.theme === 'black')) {
+              savedTheme = parsed.theme;
+            }
+          }
+        }
+        var activeTheme = (savedTheme === 'white' || savedTheme === 'black' || savedTheme === 'default') ? savedTheme : 'default';
+        document.documentElement.setAttribute('data-theme', activeTheme);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'default');
+      }
+    })();
+  </script>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            forest: {
+              DEFAULT: '#064734',
+              dark: '#042E22',
+              light: '#0B6B4F',
+              surface: '#0C261E'
+            },
+            leaf: {
+              DEFAULT: '#E0FFC2',
+              soft: '#F4FFEA',
+              lime: '#A3E635',
+              emerald: '#22C55E'
+            },
+            gold: {
+              DEFAULT: '#D6B84A',
+              soft: '#F3DF8D'
+            },
+            obsidian: {
+              DEFAULT: '#090D10',
+              card: '#111820'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'Hind Siliguri', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    /* ==========================================================================
+       CENTRAL 3-THEME ARCHITECTURE: Default (Forest & Leaf), White, Black
+       ========================================================================== */
+
+    /* 1. DEFAULT MODE — Forest & Leaf (Initial Visitor Default) */
+    html[data-theme="default"], :root {
+      --bg-main: #05261C;
+      --bg-card: rgba(8, 53, 39, 0.88);
+      --bg-surface: #041D15;
+      --bg-input: #031710;
+      --text-main: #F2FFE9;
+      --text-muted: #B6DEC6;
+      --border-col: rgba(224, 255, 194, 0.18);
+      --accent-primary-bg: #E0FFC2;
+      --accent-primary-text: #064734;
+      --badge-bg: #064734;
+      --badge-text: #E0FFC2;
+      --highlight-text: #D6B84A;
+      --hero-grad: linear-gradient(135deg, #064734 0%, #042E22 55%, #031B14 100%);
+      --header-bg: rgba(5, 38, 28, 0.90);
+    }
+
+    /* 2. WHITE MODE — Clean Light Theme (#FFFFFF bg, #F8FAFC cards, dark charcoal text) */
+    html[data-theme="white"] {
+      --bg-main: #FFFFFF;
+      --bg-card: #F8FAFC;
+      --bg-surface: #F1F5F9;
+      --bg-input: #FFFFFF;
+      --text-main: #0F172A;
+      --text-muted: #475569;
+      --border-col: #E2E8F0;
+      --accent-primary-bg: #064734;
+      --accent-primary-text: #FFFFFF;
+      --badge-bg: #E6F4EA;
+      --badge-text: #064734;
+      --highlight-text: #064734;
+      --hero-grad: linear-gradient(135deg, #064734 0%, #0A5C44 100%);
+      --header-bg: rgba(255, 255, 255, 0.95);
+    }
+
+    /* 3. BLACK MODE — True Dark Theme (#090D10 bg, #111820 cards, soft white text) */
+    html[data-theme="black"] {
+      --bg-main: #090D10;
+      --bg-card: #111820;
+      --bg-surface: #16202A;
+      --bg-input: #0D131A;
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --border-col: rgba(148, 163, 184, 0.18);
+      --accent-primary-bg: #E0FFC2;
+      --accent-primary-text: #064734;
+      --badge-bg: #1E293B;
+      --badge-text: #E0FFC2;
+      --highlight-text: #D6B84A;
+      --hero-grad: linear-gradient(135deg, #111820 0%, #090D10 100%);
+      --header-bg: rgba(9, 13, 16, 0.92);
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: 'Inter', 'Hind Siliguri', sans-serif;
+      transition: background-color 0.2s ease, color 0.2s ease;
+      overflow-x: hidden;
+    }
+
+    .app-header {
+      background-color: var(--header-bg);
+      border-bottom: 1px solid var(--border-col);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .glass-card {
+      background-color: var(--bg-card);
+      color: var(--text-main);
+      border: 1px solid var(--border-col);
+      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .theme-surface {
+      background-color: var(--bg-surface);
+      color: var(--text-main);
+      border: 1px solid var(--border-col);
+    }
+
+    .theme-input {
+      background-color: var(--bg-input);
+      color: var(--text-main);
+      border: 1px solid var(--border-col);
+    }
+    .theme-input:focus {
+      outline: 2px solid #064734;
+      border-color: #064734;
+    }
+    html[data-theme="default"] .theme-input:focus,
+    html[data-theme="black"] .theme-input:focus {
+      outline: 2px solid #E0FFC2;
+      border-color: #E0FFC2;
+    }
+
+    .btn-primary-theme {
+      background-color: var(--accent-primary-bg);
+      color: var(--accent-primary-text);
+    }
+    .btn-primary-theme:hover {
+      opacity: 0.92;
+    }
+
+    .badge-theme {
+      background-color: var(--badge-bg);
+      color: var(--badge-text);
+    }
+
+    .text-highlight-theme {
+      color: var(--highlight-text);
+    }
+
+    .text-muted-theme {
+      color: var(--text-muted);
+    }
+
+    .hero-surface {
+      background: var(--hero-grad);
+      border: 1px solid var(--border-col);
+    }
+
+    /* White-mode specific adaptations for any legacy utility classes inside dynamic templates */
+    html[data-theme="white"] .bg-obsidian,
+    html[data-theme="white"] .bg-obsidian\/90,
+    html[data-theme="white"] .bg-obsidian\/80,
+    html[data-theme="white"] .bg-obsidian\/70,
+    html[data-theme="white"] .bg-obsidian\/60,
+    html[data-theme="white"] .bg-white\/5,
+    html[data-theme="white"] .bg-white\/10 {
+      background-color: #F1F5F9 !important;
+      color: #0F172A !important;
+      border-color: #CBD5E1 !important;
+    }
+
+    /* High-contrast White Mode overrides: ensure 100% of text, cards, and hero boxes are crystal clear */
+    html[data-theme="white"] {
+      --bg-main: #FFFFFF;
+      --bg-card: #F8FAFC;
+      --bg-surface: #EDF2F7;
+      --bg-input: #FFFFFF;
+      --text-main: #0F172A;
+      --text-muted: #334155;
+      --border-col: #CBD5E1;
+      --accent-primary-bg: #064734;
+      --accent-primary-text: #FFFFFF;
+      --badge-bg: #E6F4EA;
+      --badge-text: #064734;
+      --highlight-text: #064734;
+      --hero-grad: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
+      --header-bg: rgba(255, 255, 255, 0.96);
+    }
+
+    html[data-theme="white"] .hero-surface {
+      background: var(--hero-grad) !important;
+      color: #0F172A !important;
+      border: 1px solid #BBF7D0 !important;
+      box-shadow: 0 10px 25px rgba(6, 71, 52, 0.06) !important;
+    }
+
+    html[data-theme="white"] .text-slate-100,
+    html[data-theme="white"] .text-slate-200,
+    html[data-theme="white"] .text-slate-300,
+    html[data-theme="white"] .text-slate-100\/90,
+    html[data-theme="white"] .text-white,
+    html[data-theme="white"] .text-leaf,
+    html[data-theme="white"] .hero-surface .text-white,
+    html[data-theme="white"] .hero-surface .text-slate-100,
+    html[data-theme="white"] .hero-surface .text-slate-200,
+    html[data-theme="white"] .hero-surface .text-slate-100\/90,
+    html[data-theme="white"] .hero-surface .text-leaf {
+      color: #0F172A !important;
+    }
+
+    /* Keep logo & dark forest badges readable */
+    html[data-theme="white"] .bg-forest .text-leaf {
+      color: #E0FFC2 !important;
+    }
+
+    html[data-theme="white"] .hero-surface .bg-black\/35,
+    html[data-theme="white"] .hero-surface .bg-black\/30,
+    html[data-theme="white"] .hero-surface .bg-white\/10,
+    html[data-theme="white"] .hero-surface .bg-white\/15,
+    html[data-theme="white"] .hero-surface .bg-leaf\/15 {
+      background-color: #FFFFFF !important;
+      color: #0F172A !important;
+      border: 1px solid #CBD5E1 !important;
+    }
+
+    html[data-theme="white"] .hero-surface button.bg-leaf,
+    html[data-theme="white"] .hero-surface a.bg-leaf {
+      background-color: #064734 !important;
+      color: #FFFFFF !important;
+    }
+
+    html[data-theme="white"] .text-gold {
+      color: #064734 !important;
+    }
+    html[data-theme="white"] .text-emerald-300,
+    html[data-theme="white"] .text-emerald-400 {
+      color: #047857 !important;
+    }
+    html[data-theme="white"] .text-rose-300,
+    html[data-theme="white"] .text-rose-400 {
+      color: #BE123C !important;
+    }
+
+    .gold-glow-card {
+      background: var(--bg-card);
+      color: var(--text-main);
+      border: 1px solid var(--border-col);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- Clean, Minimal, Professional Sticky Header -->
+  <header class="sticky top-0 z-40 app-header">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
+      <!-- Brand Logo & Name -->
+      <button type="button" id="brand-home-btn" class="flex items-center gap-2.5 text-left focus:outline-none focus:ring-2 focus:ring-forest rounded-xl py-1 pr-2 shrink-0">
+        <div class="w-9 h-9 rounded-xl bg-forest flex items-center justify-center border border-leaf/30 shadow-sm">
+          <span class="text-leaf font-extrabold text-sm tracking-tight">IP</span>
+        </div>
+        <span class="font-extrabold text-base sm:text-lg tracking-tight">IELTS Pathway</span>
+      </button>
+
+      <!-- Concise Desktop Navigation -->
+      <nav aria-label="Main Navigation" class="hidden xl:flex items-center gap-1 text-xs font-semibold">
+        <button type="button" data-nav="home" class="nav-tab px-3 py-2 rounded-lg transition">হোম</button>
+        <button type="button" data-nav="learn" class="nav-tab px-3 py-2 rounded-lg transition">IELTS Modules</button>
+        <button type="button" data-nav="spoken" class="nav-tab px-3 py-2 rounded-lg transition">Spoken English</button>
+        <button type="button" data-nav="vocab" class="nav-tab px-3 py-2 rounded-lg transition">Vocabulary</button>
+        <button type="button" data-nav="youtube" class="nav-tab px-3 py-2 rounded-lg transition">YouTube Resources</button>
+        <button type="button" data-nav="practice" class="nav-tab px-3 py-2 rounded-lg transition">Practice</button>
+        <button type="button" data-nav="planner" class="nav-tab px-3 py-2 rounded-lg transition">Study Planner</button>
+        <button type="button" data-nav="dashboard" class="nav-tab px-3 py-2 rounded-lg transition">Dashboard</button>
+      </nav>
+
+      <!-- Compact Right Utility Controls: Language Switch, 3-Mode Theme Selector, Google Sign-In, Mobile Menu -->
+      <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        <!-- Language Switcher -->
+        <button type="button" id="lang-toggle-btn" aria-label="Switch Language between Bengali and English" class="h-9 px-2.5 rounded-lg text-xs font-bold theme-surface hover:opacity-85 transition">
+          বাংলা / EN
+        </button>
+
+        <!-- Accessible 3-Mode Theme Selector (Default, White, Black) with Icons & Labels -->
+        <div class="inline-flex items-center rounded-lg p-0.5 theme-surface" role="group" aria-label="Select Theme Mode">
+          <button type="button" data-theme-mode="default" id="theme-btn-default" class="theme-mode-btn h-8 px-2 rounded-md text-[11px] font-semibold flex items-center gap-1 transition" title="Default Mode (Forest & Leaf)">
+            <span aria-hidden="true">🌿</span>
+            <span>Default</span>
+          </button>
+          <button type="button" data-theme-mode="white" id="theme-btn-white" class="theme-mode-btn h-8 px-2 rounded-md text-[11px] font-semibold flex items-center gap-1 transition" title="White Mode (Light Theme)">
+            <span aria-hidden="true">☀️</span>
+            <span>White</span>
+          </button>
+          <button type="button" data-theme-mode="black" id="theme-btn-black" class="theme-mode-btn h-8 px-2 rounded-md text-[11px] font-semibold flex items-center gap-1 transition" title="Black Mode (Dark Theme)">
+            <span aria-hidden="true">🌙</span>
+            <span>Black</span>
+          </button>
+        </div>
+
+        <!-- Instant Create Account Button (No Login Required) -->
+        <button type="button" data-nav="login" id="header-login-btn" class="hidden sm:inline-flex items-center h-9 px-3 rounded-lg text-xs font-bold btn-primary-theme transition shadow-sm">
+          Create Account
+        </button>
+
+        <!-- Mobile Menu Button -->
+        <button type="button" id="mobile-menu-btn" aria-label="Open Navigation Menu" aria-expanded="false" class="xl:hidden h-9 w-9 inline-flex items-center justify-center rounded-lg theme-surface text-sm font-bold">
+          ☰
+        </button>
+      </div>
+    </div>
+
+    <!-- Clean Mobile & Tablet Navigation Drawer -->
+    <div id="mobile-drawer" class="hidden xl:hidden border-t px-4 py-3 space-y-3 glass-card">
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-1.5 text-xs font-semibold">
+        <button type="button" data-nav="home" class="nav-tab text-left px-3 py-2 rounded-lg">হোম (Home)</button>
+        <button type="button" data-nav="learn" class="nav-tab text-left px-3 py-2 rounded-lg">IELTS 4 Skills</button>
+        <button type="button" data-nav="spoken" class="nav-tab text-left px-3 py-2 rounded-lg">Spoken English</button>
+        <button type="button" data-nav="vocab" class="nav-tab text-left px-3 py-2 rounded-lg">Vocabulary & Grammar</button>
+        <button type="button" data-nav="youtube" class="nav-tab text-left px-3 py-2 rounded-lg">YouTube Resources</button>
+        <button type="button" data-nav="practice" class="nav-tab text-left px-3 py-2 rounded-lg">Practice & Mock Quiz</button>
+        <button type="button" data-nav="planner" class="nav-tab text-left px-3 py-2 rounded-lg">Study Planner (2–12M)</button>
+        <button type="button" data-nav="dashboard" class="nav-tab text-left px-3 py-2 rounded-lg">Progress Dashboard</button>
+        <button type="button" data-nav="resources" class="nav-tab text-left px-3 py-2 rounded-lg">Resource Library</button>
+        <button type="button" data-nav="login" class="nav-tab text-left px-3 py-2 rounded-lg font-bold">Create Account</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" aria-live="polite" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 max-w-sm"></div>
+
+  <!-- Main Dynamic Views Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 md:py-8 space-y-10">
+
+    <!-- ==================== VIEW 1: HOME (CLEAN LEARNING PLATFORM) ==================== -->
+    <section id="view-home" class="app-view space-y-10">
+      <!-- Hero Section — Seamlessly blended with Forest & Leaf identity, ZERO developer color codes -->
+      <div class="relative rounded-3xl overflow-hidden hero-surface p-6 sm:p-8 md:p-12 shadow-xl">
+        <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-7 space-y-5">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-leaf/15 border border-leaf/30 text-leaf text-xs font-semibold">
+              <span id="hero-badge-i18n">সম্পূর্ণ বিনামূল্যে • বাংলা ও ইংরেজি গাইডলাইন</span>
+            </div>
+            <h1 id="hero-title-i18n" class="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight text-white">
+              সবার জন্য বিনামূল্যে IELTS ও Spoken English প্রস্তুতি
+            </h1>
+            <p id="hero-desc-i18n" class="text-sm md:text-base text-slate-100/90 leading-relaxed max-w-2xl">
+              Reading, Writing, Listening, Speaking এবং Spoken English-এর পূর্ণাঙ্গ লেসন, যাচাইকৃত ফ্রি YouTube রিসোর্স, ২ থেকে ১২ মাসের ব্যক্তিগত স্টাডি প্ল্যানার এবং অগ্রগতি ট্র্যাকিং—সবকিছু এক প্ল্যাটফর্মে।
+            </p>
+            <div class="flex flex-wrap items-center gap-3 pt-1">
+              <button type="button" data-nav="learn" class="h-11 px-6 rounded-xl bg-leaf text-forest font-extrabold text-sm hover:opacity-95 transition shadow-md">
+                Start Free IELTS Preparation
+              </button>
+              <button type="button" data-nav="planner" class="h-11 px-6 rounded-xl bg-white/10 border border-leaf/40 text-white font-bold text-sm hover:bg-white/20 transition">
+                Create My Study Plan
+              </button>
+            </div>
+            <!-- Learner Quick Feature Highlights (Replaces removed developer swatch) -->
+            <div class="pt-3 grid grid-cols-3 gap-3 max-w-lg text-xs text-slate-100/90 border-t border-white/15">
+              <div>
+                <div class="font-bold text-leaf">4 Core Skills</div>
+                <div class="opacity-80">Academic & General</div>
+              </div>
+              <div>
+                <div class="font-bold text-leaf">2–12 Months</div>
+                <div class="opacity-80">Smart Study Routine</div>
+              </div>
+              <div>
+                <div class="font-bold text-leaf">100% Free</div>
+                <div class="opacity-80">No Hidden Paywall</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Balanced Daily Vocabulary & Quick Practice Card -->
+          <div class="lg:col-span-5">
+            <div class="rounded-2xl bg-black/35 border border-white/15 p-5 space-y-4 backdrop-blur-md text-white">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold uppercase tracking-wider text-leaf">আজকের শব্দ (Daily Vocabulary)</span>
+                <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-white/15 text-white font-semibold">Academic Band 7+</span>
+              </div>
+              <div>
+                <h2 class="text-xl font-extrabold text-white">Ubiquitous <span class="text-xs font-normal text-slate-200">/juːˈbɪk.wɪ.təs/</span></h2>
+                <p class="text-xs text-leaf mt-1 font-medium">বাংলা অর্থ: সর্বব্যাপী / যা সব জায়গায় দেখা যায়</p>
+                <p class="text-xs text-slate-100 mt-2 italic bg-white/10 p-3 rounded-xl">
+                  "Digital learning tools have become ubiquitous in modern higher education."
+                </p>
+              </div>
+              <div class="pt-2 border-t border-white/15 flex items-center justify-between gap-2">
+                <span class="text-xs text-slate-200">প্রতিদিন ৫টি নতুন একাডেমিক শব্দ ও কলোকেশন শিখুন।</span>
+                <button type="button" data-nav="vocab" class="h-8 px-3 rounded-lg bg-leaf text-forest font-bold text-xs shrink-0 hover:opacity-90">
+                  সব শব্দ দেখুন →
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Core Learning Modules Section -->
+      <div class="space-y-4">
+        <div class="flex flex-wrap items-end justify-between gap-2">
+          <div>
+            <h2 class="text-xl sm:text-2xl font-extrabold" id="home-modules-heading">IELTS ও Spoken English লার্নিং মডিউল</h2>
+            <p class="text-xs sm:text-sm text-muted-theme">যেকোনো মডিউল নির্বাচন করে সরাসরি অনুশীলন শুরু করুন।</p>
+          </div>
+          <button type="button" data-nav="resources" class="h-9 px-4 rounded-xl text-xs font-bold btn-primary-theme">
+            ফ্রি রিসোর্স লাইব্রেরি →
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <!-- Reading -->
+          <div class="glass-card rounded-2xl p-5 flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="px-2.5 py-1 rounded-lg badge-theme text-xs font-bold">IELTS Reading</span>
+                <span class="text-xs font-medium text-muted-theme">Academic & GT</span>
+              </div>
+              <h3 class="text-base sm:text-lg font-bold">প্যাসেজ বিশ্লেষণ ও প্রশ্ন সমাধান</h3>
+              <p class="text-xs text-muted-theme leading-relaxed">
+                True/False/Not Given, Yes/No/Not Given, Matching Headings এবং টাইমড রিডিং অনুশীলন।
+              </p>
+            </div>
+            <div class="flex items-center justify-between pt-3 border-t border-current/10">
+              <button type="button" data-open-skill="reading" class="text-xs font-extrabold text-highlight-theme hover:underline">
+                Reading অনুশীলন করুন →
+              </button>
+              <button type="button" data-yt-filter="reading" class="text-[11px] px-2.5 py-1 rounded-lg theme-surface font-semibold">
+                ভিডিও ক্লাস
+              </button>
+            </div>
+          </div>
+
+          <!-- Writing -->
+          <div class="glass-card rounded-2xl p-5 flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="px-2.5 py-1 rounded-lg badge-theme text-xs font-bold">IELTS Writing</span>
+                <span class="text-xs font-medium text-muted-theme">Task 1 & Task 2</span>
+              </div>
+              <h3 class="text-base sm:text-lg font-bold">রাইটিং ওয়ার্কস্পেস ও মডেল প্রবন্ধ</h3>
+              <p class="text-xs text-muted-theme leading-relaxed">
+                Task 1 চার্ট/চিঠি এবং Task 2 প্রবন্ধের গঠন, ওয়ার্ড কাউন্টার, অটো-সেভ এবং ৪টি মার্কিং ক্রাইটেরিয়া চেকলিস্ট।
+              </p>
+            </div>
+            <div class="flex items-center justify-between pt-3 border-t border-current/10">
+              <button type="button" data-open-skill="writing" class="text-xs font-extrabold text-highlight-theme hover:underline">
+                Writing অনুশীলন করুন →
+              </button>
+              <button type="button" data-yt-filter="writing" class="text-[11px] px-2.5 py-1 rounded-lg theme-surface font-semibold">
+                ভিডিও ক্লাস
+              </button>
+            </div>
+          </div>
+
+          <!-- Listening -->
+          <div class="glass-card rounded-2xl p-5 flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="px-2.5 py-1 rounded-lg badge-theme text-xs font-bold">IELTS Listening</span>
+                <span class="text-xs font-medium text-muted-theme">Audio & Transcript</span>
+              </div>
+              <h3 class="text-base sm:text-lg font-bold">অডিও অনুশীলন ও ম্যাপ লেবেলিং</h3>
+              <p class="text-xs text-muted-theme leading-relaxed">
+                বিভিন্ন অ্যাক্সেন্টের অডিও প্লেয়ার, পূর্ণাঙ্গ ট্রান্সক্রিপ্ট, বানান সতর্কতা এবং ডিস্ট্র্যাক্টর চেনার কৌশল।
+              </p>
+            </div>
+            <div class="flex items-center justify-between pt-3 border-t border-current/10">
+              <button type="button" data-open-skill="listening" class="text-xs font-extrabold text-highlight-theme hover:underline">
+                Listening অনুশীলন করুন →
+              </button>
+              <button type="button" data-yt-filter="listening" class="text-[11px] px-2.5 py-1 rounded-lg theme-surface font-semibold">
+                ভিডিও ক্লাস
+              </button>
+            </div>
+          </div>
+
+          <!-- Speaking -->
+          <div class="glass-card rounded-2xl p-5 flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="px-2.5 py-1 rounded-lg badge-theme text-xs font-bold">IELTS Speaking</span>
+                <span class="text-xs font-medium text-muted-theme">Part 1, 2 & 3</span>
+              </div>
+              <h3 class="text-base sm:text-lg font-bold">Cue Card টাইমার ও ভয়েস রেকর্ডার</h3>
+              <p class="text-xs text-muted-theme leading-relaxed">
+                ১ মিনিটের প্রস্তুতি টাইমার, ২ মিনিটের স্পিকিং টাইমার, লোকাল ভয়েস রেকর্ডার এবং পার্ট ১–৩ প্রশ্ন ব্যাংক।
+              </p>
+            </div>
+            <div class="flex items-center justify-between pt-3 border-t border-current/10">
+              <button type="button" data-open-skill="speaking" class="text-xs font-extrabold text-highlight-theme hover:underline">
+                Speaking অনুশীলন করুন →
+              </button>
+              <button type="button" data-yt-filter="speaking" class="text-[11px] px-2.5 py-1 rounded-lg theme-surface font-semibold">
+                ভিডিও ক্লাস
+              </button>
+            </div>
+          </div>
+
+          <!-- Spoken English -->
+          <div class="glass-card rounded-2xl p-5 flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="px-2.5 py-1 rounded-lg badge-theme text-xs font-bold">Spoken English</span>
+                <span class="text-xs font-medium text-muted-theme">Beginner → Advanced</span>
+              </div>
+              <h3 class="text-base sm:text-lg font-bold">দৈনন্দিন ইংরেজি কথোপকথন</h3>
+              <p class="text-xs text-muted-theme leading-relaxed">
+                ক্যাম্পাস, কর্মক্ষেত্র ও ভ্রমণের বাস্তব সংলাপ, সহজ বাংলা ব্যাখ্যা এবং উচ্চারণ উন্নয়নের গাইড।
+              </p>
+            </div>
+            <div class="flex items-center justify-between pt-3 border-t border-current/10">
+              <button type="button" data-nav="spoken" class="text-xs font-extrabold text-highlight-theme hover:underline">
+                Spoken English শিখুন →
+              </button>
+              <button type="button" data-yt-filter="grammar" class="text-[11px] px-2.5 py-1 rounded-lg theme-surface font-semibold">
+                ভিডিও ক্লাস
+              </button>
+            </div>
+          </div>
+
+          <!-- Free YouTube Learning Resources -->
+          <div class="glass-card rounded-2xl p-5 flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="px-2.5 py-1 rounded-lg badge-theme text-xs font-bold">YouTube Resources</span>
+                <span class="text-xs font-medium text-muted-theme">বাংলা ও English</span>
+              </div>
+              <h3 class="text-base sm:text-lg font-bold">যাচাইকৃত ফ্রি YouTube ক্লাস ও প্লেলিস্ট</h3>
+              <p class="text-xs text-muted-theme leading-relaxed">
+                ট্রান্সক্রিপ্ট ও সিলেবাস কভারেজ বিশ্লেষণ করে বাছাইকৃত সেরা বাংলা ও ইংরেজি ফ্রি IELTS টিউটোরিয়াল।
+              </p>
+            </div>
+            <div class="flex items-center justify-between pt-3 border-t border-current/10">
+              <button type="button" data-nav="youtube" class="text-xs font-extrabold text-highlight-theme hover:underline">
+                সব রিসোর্স দেখুন →
+              </button>
+              <span class="text-[11px] text-muted-theme">8 Verified Courses</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Study Planner & Personal Progress Tracking Preview Cards -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="glass-card rounded-2xl p-6 space-y-4 flex flex-col justify-between">
+          <div class="space-y-2">
+            <span class="px-2.5 py-1 rounded-lg badge-theme text-xs font-bold">Personalized Study Planner</span>
+            <h3 class="text-xl font-bold">২ থেকে ১২ মাসের স্মার্ট স্টাডি রুটিন</h3>
+            <p class="text-xs sm:text-sm text-muted-theme leading-relaxed">
+              আপনার বর্তমান ইংরেজি দক্ষতা, টার্গেট ব্যান্ড স্কোর এবং প্রতিদিন পড়ার সময় অনুযায়ী স্বয়ংক্রিয় রুটিন তৈরি করুন। দুর্বল স্কিলে অতিরিক্ত অনুশীলনের ব্যবস্থা এবং অসমাপ্ত টাস্ক সহজেই রিশিডিউল করুন।
+            </p>
+          </div>
+          <div class="pt-2 flex flex-wrap gap-3">
+            <button type="button" data-nav="planner" class="h-10 px-5 rounded-xl text-xs font-extrabold btn-primary-theme">
+              আমার স্টাডি প্ল্যান তৈরি করুন →
+            </button>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 space-y-4 flex flex-col justify-between">
+          <div class="space-y-2">
+            <span class="px-2.5 py-1 rounded-lg badge-theme text-xs font-bold">Progress Tracking Dashboard</span>
+            <h3 class="text-xl font-bold">স্কিল-ভিত্তিক অগ্রগতি ও অ্যাকুরেসি ট্র্যাকিং</h3>
+            <p class="text-xs sm:text-sm text-muted-theme leading-relaxed">
+              আপনার সম্পন্ন করা লেসন, কুইজের সঠিক উত্তরের হার (Accuracy %), স্টাডি স্ট্রিক এবং সংরক্ষিত রাইটিং ড্রাফট এক নজরে ট্র্যাক করুন।
+            </p>
+          </div>
+          <div class="pt-2 flex flex-wrap gap-3">
+            <button type="button" data-nav="dashboard" class="h-10 px-5 rounded-xl text-xs font-extrabold btn-primary-theme">
+              প্রগ্রেস ড্যাশবোর্ড দেখুন →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Learning Roadmap & FAQ -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="glass-card rounded-2xl p-6 space-y-4">
+          <h3 class="text-lg sm:text-xl font-bold">ধাপে ধাপে প্রস্তুতির রোডম্যাপ (Beginner to Advanced)</h3>
+          <ol class="space-y-3 text-xs sm:text-sm">
+            <li class="p-3.5 rounded-xl theme-surface">
+              <strong>ধাপ ১ (Foundation):</strong> মৌলিক Grammar Tense, বাক্য গঠন, দৈনন্দিন Spoken English এবং একাডেমিক ভোকাবুলারি।
+            </li>
+            <li class="p-3.5 rounded-xl theme-surface">
+              <strong>ধাপ ২ (Core IELTS Strategies):</strong> Reading TFNG ও Headings কৌশল, Listening ডিস্ট্র্যাক্টর চেনা এবং Writing Task 1 ও Task 2-এর কাঠামো।
+            </li>
+            <li class="p-3.5 rounded-xl theme-surface">
+              <strong>ধাপ ৩ (Timed Practice & Review):</strong> নির্ধারিত সময়ে মক অনুশীলন, ভুল উত্তরের রিভিশন এবং ২ মিনিটের Speaking Cue Card রেকর্ডিং।
+            </li>
+          </ol>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 space-y-4">
+          <h3 class="text-lg sm:text-xl font-bold">সচরাচর জিজ্ঞাসিত প্রশ্ন (FAQ)</h3>
+          <div class="space-y-3 text-xs sm:text-sm">
+            <div class="p-3.5 rounded-xl theme-surface">
+              <p class="font-bold">১. এই প্ল্যাটফর্মের সব ফিচার কি বিনামূল্যে ব্যবহার করা যাবে?</p>
+              <p class="text-muted-theme mt-1">হ্যাঁ। কোনো বাধ্যতামূলক পেইড সাবস্ক্রিপশন ছাড়াই সব লেসন, কুইজ, স্টাডি প্ল্যানার ও YouTube রিসোর্স উন্মুক্ত।</p>
+            </div>
+            <div class="p-3.5 rounded-xl theme-surface">
+              <p class="font-bold">২. অনুশীলনের স্কোর কি অফিসিয়াল IELTS ব্যান্ড স্কোর?</p>
+              <p class="text-muted-theme mt-1">না। এটি আপনার প্রস্তুতির অগ্রগতি ও সঠিক উত্তরের হার বোঝার জন্য; এটি আনুষ্ঠানিক IELTS বা পরীক্ষক প্রদত্ত ব্যান্ড স্কোর নয়।</p>
+            </div>
+            <div class="p-3.5 rounded-xl theme-surface">
+              <p class="font-bold">৩. আমার থিম ও পড়াশোনার অগ্রগতি কীভাবে সংরক্ষিত থাকে?</p>
+              <p class="text-muted-theme mt-1">লগইন ছাড়াই যে কেউ সরাসরি ব্যবহার করতে পারবেন। শুধু "Create Account"-এ নিজের নাম ও লক্ষ্য দিয়ে সেভ করলেই আপনার অ্যাকাউন্ট ও অগ্রগতি স্বয়ংক্রিয়ভাবে সংরক্ষিত থাকবে।</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 2: IELTS 4 SKILLS LEARNING CENTER ==================== -->
+    <section id="view-learn" class="app-view hidden space-y-6">
+      <div class="flex flex-wrap items-center justify-between gap-4 border-b border-current/10 pb-4">
+        <div>
+          <h1 class="text-2xl md:text-3xl font-extrabold">IELTS Learning Center (4 Core Skills)</h1>
+          <p class="text-xs md:text-sm text-muted-theme">প্রতিটি স্কিলের বাস্তব লেসন, অনুশীলন, অটো-সেভ রাইটিং ওয়ার্কস্পেস, অডিও ট্রান্সক্রিপ্ট এবং স্পিকিং রেকর্ডার।</p>
+        </div>
+        <!-- Skill Sub-navigation Pills -->
+        <div class="flex flex-wrap gap-2">
+          <button type="button" data-skill-tab="reading" class="skill-subtab h-9 px-4 rounded-xl text-xs font-bold btn-primary-theme">📖 Reading</button>
+          <button type="button" data-skill-tab="writing" class="skill-subtab h-9 px-4 rounded-xl text-xs font-bold glass-card">✍️ Writing</button>
+          <button type="button" data-skill-tab="listening" class="skill-subtab h-9 px-4 rounded-xl text-xs font-bold glass-card">🎧 Listening</button>
+          <button type="button" data-skill-tab="speaking" class="skill-subtab h-9 px-4 rounded-xl text-xs font-bold glass-card">🎙️ Speaking</button>
+        </div>
+      </div>
+
+      <!-- SUBVIEW A: IELTS READING -->
+      <div id="skill-panel-reading" class="skill-panel space-y-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-7 glass-card rounded-2xl p-6 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="px-3 py-1 rounded-full badge-theme text-xs font-bold">Academic & GT Reading Passage</span>
+              <div class="flex items-center gap-2">
+                <span id="reading-timer-display" class="font-mono text-sm font-bold px-3 py-1 rounded-lg theme-surface">20:00</span>
+                <button type="button" id="reading-timer-btn" class="h-8 px-3 rounded-lg btn-primary-theme text-xs font-bold">Start Timer</button>
+              </div>
+            </div>
+            <h2 class="text-xl font-bold">Urban Micro-Forests and the Akira Miyawaki Method</h2>
+            <div class="text-xs md:text-sm space-y-3 leading-relaxed max-h-96 overflow-y-auto pr-2">
+              <p><strong>Paragraph A:</strong> Over the past decade, urban planners across South Asia and Europe have increasingly turned to the Miyawaki method—a technique pioneered by Japanese botanist Akira Miyawaki—to combat urban heat islands. Unlike conventional municipal tree-planting schemes that space saplings several meters apart, Miyawaki forests plant three to four native species per square meter.</p>
+              <p><strong>Paragraph B:</strong> Because these native saplings compete intensely for sunlight from day one, studies indicate that their vertical growth rate is up to ten times faster than single-species plantations. Furthermore, once established after the initial two to three years of weeding and watering, a Miyawaki mini-forest becomes completely self-sustaining and requires no chemical fertilizers.</p>
+              <p><strong>Paragraph C:</strong> Critics, however, point out that the upfront cost of soil preparation and high sapling density makes the technique significantly more expensive per square meter than traditional park landscaping. Additionally, while micro-forests excel at boosting local insect biodiversity in compact plots, ecologists warn they cannot replace large-scale ancient woodlands.</p>
+            </div>
+            <div class="pt-3 border-t border-current/10 flex items-center justify-between">
+              <span class="text-xs text-muted-theme">Lesson ID: <code>lesson-reading-01</code></span>
+              <button type="button" data-complete-lesson="lesson-reading-01" data-lesson-skill="reading" class="complete-lesson-btn h-9 px-4 rounded-xl btn-primary-theme text-xs font-bold">
+                ✓ Mark Reading Lesson Completed
+              </button>
+            </div>
+          </div>
+
+          <div class="lg:col-span-5 glass-card rounded-2xl p-6 space-y-4">
+            <h3 class="text-lg font-bold">Interactive True / False / Not Given & Heading Check</h3>
+            <p class="text-xs text-muted-theme">নিচের ৩টি প্রশ্নের উত্তর দিন এবং তাৎক্ষণিক ব্যাখ্যা (Explanation) দেখুন:</p>
+            <div id="reading-mini-quiz" class="space-y-4 text-xs md:text-sm"></div>
+            <button type="button" id="submit-reading-mini-btn" class="w-full h-11 rounded-xl btn-primary-theme font-extrabold text-sm">
+              Submit Reading Answers & View Explanation
+            </button>
+            <div id="reading-mini-feedback" class="hidden p-4 rounded-xl theme-surface text-xs space-y-2"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUBVIEW B: IELTS WRITING -->
+      <div id="skill-panel-writing" class="skill-panel hidden space-y-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-8 glass-card rounded-2xl p-6 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div class="flex items-center gap-2">
+                <label for="writing-task-select" class="text-xs font-bold">Select Task:</label>
+                <select id="writing-task-select" class="rounded-lg theme-input px-3 py-1.5 text-xs font-semibold">
+                  <option value="task2-opinion">Task 2 (Opinion Essay): Remote Work & Urban Traffic</option>
+                  <option value="task1-academic">Academic Task 1: Renewable Energy Generation Bar Chart</option>
+                  <option value="task1-gt">General Training Task 1: Letter to Landlord about Heating Repair</option>
+                </select>
+              </div>
+              <span id="writing-autosave-badge" class="text-xs text-emerald-400 font-semibold">✓ Draft Autosaved Locally</span>
+            </div>
+
+            <div id="writing-prompt-box" class="p-4 rounded-xl theme-surface text-xs md:text-sm space-y-1">
+              <p class="font-bold text-highlight-theme">Prompt (Task 2 — 40 Minutes, Minimum 250 Words):</p>
+              <p id="writing-prompt-text">Some people believe that allowing employees to work from home permanently benefits both companies and society as a whole. To what extent do you agree or disagree? Give reasons for your answer and include any relevant examples from your own knowledge or experience.</p>
+            </div>
+
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-xs font-semibold">
+                <label for="writing-editor">Your Essay / Letter Draft:</label>
+                <div class="flex items-center gap-4">
+                  <span>Words: <strong id="writing-word-count" class="text-highlight-theme">0</strong> <span id="writing-min-target">/ 250 min</span></span>
+                  <span>Characters: <strong id="writing-char-count">0</strong></span>
+                </div>
+              </div>
+              <textarea id="writing-editor" rows="10" placeholder="Write your introduction, body paragraphs (Main Point -> Explain -> Example), and conclusion here..." class="w-full rounded-xl p-4 theme-input text-sm leading-relaxed"></textarea>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center gap-2">
+                <button type="button" id="save-writing-draft-btn" class="h-9 px-4 rounded-xl btn-primary-theme font-bold text-xs">
+                  💾 Save Draft to History
+                </button>
+                <button type="button" id="toggle-model-answer-btn" class="h-9 px-4 rounded-xl theme-surface font-bold text-xs">
+                  👁️ View Band 8.5 Model Essay & Breakdown
+                </button>
+              </div>
+              <button type="button" data-complete-lesson="lesson-writing-01" data-lesson-skill="writing" class="complete-lesson-btn h-9 px-4 rounded-xl badge-theme text-xs font-bold">
+                ✓ Mark Writing Lesson Completed
+              </button>
+            </div>
+
+            <div id="writing-model-box" class="hidden p-4 rounded-xl theme-surface text-xs space-y-2">
+              <p class="font-bold text-highlight-theme">Band 8.5 Model Paragraph Excerpt & Examiner Criteria Notes:</p>
+              <p class="italic">"The shift toward remote working arrangements has fundamentally reshaped modern corporate culture. I strongly agree that flexible telecommuting yields substantial advantages for both employers and wider urban communities, provided that clear communication protocols are maintained..."</p>
+              <p class="text-emerald-400"><strong>কেন এটি কার্যকর (বাংলা ব্যাখ্যা):</strong> এখানে কোনো বানানো পরিসংখ্যান (যেমন "98% of people") ব্যবহার করা হয়নি। সরাসরি প্রশ্নের উত্তর দেওয়া হয়েছে এবং প্যারাফ্রেজিং স্বাভাবিক রাখা হয়েছে।</p>
+            </div>
+          </div>
+
+          <div class="lg:col-span-4 glass-card rounded-2xl p-6 space-y-4">
+            <h3 class="text-lg font-bold">4 Official Assessment Criteria Checklist</h3>
+            <p class="text-xs text-muted-theme">নিজের লেখা জমা দেওয়ার আগে ৪টি অফিসিয়াল মানদণ্ডে যাচাই করুন (সতর্কতা: এটি সেলফ-অ্যাসেসমেন্ট, অফিসিয়াল এক্সামিনার ব্যান্ড স্কোর নয়):</p>
+            <div class="space-y-2.5 text-xs">
+              <label class="flex items-start gap-2.5 p-2.5 rounded-lg theme-surface cursor-pointer">
+                <input type="checkbox" class="writing-check mt-0.5 accent-emerald-600" />
+                <span><strong>Task Response (25%):</strong> প্রশ্নের সবগুলো অংশের উত্তর দেওয়া হয়েছে এবং অন্তত ২৫০ শব্দ (Task 1-এ ১৫০ শব্দ) লেখা হয়েছে।</span>
+              </label>
+              <label class="flex items-start gap-2.5 p-2.5 rounded-lg theme-surface cursor-pointer">
+                <input type="checkbox" class="writing-check mt-0.5 accent-emerald-600" />
+                <span><strong>Coherence & Cohesion (25%):</strong> প্রতিটি প্যারাগ্রাফে একটি সুস্পষ্ট মূল ভাব (Central Topic) এবং স্বাভাবিক লিংকিং ওয়ার্ড রয়েছে।</span>
+              </label>
+              <label class="flex items-start gap-2.5 p-2.5 rounded-lg theme-surface cursor-pointer">
+                <input type="checkbox" class="writing-check mt-0.5 accent-emerald-600" />
+                <span><strong>Lexical Resource (25%):</strong> বিষয়ের সাথে সামঞ্জস্যপূর্ণ কলোকেশন এবং সঠিক বানান ব্যবহার করা হয়েছে (মুখস্থ ক্লিশে ইডিয়ম ছাড়া)।</span>
+              </label>
+              <label class="flex items-start gap-2.5 p-2.5 rounded-lg theme-surface cursor-pointer">
+                <input type="checkbox" class="writing-check mt-0.5 accent-emerald-600" />
+                <span><strong>Grammatical Range & Accuracy (25%):</strong> Simple ও Complex বাক্যের সঠিক মিশ্রণ এবং বিরামচিহ্নের (Punctuation) নির্ভুল ব্যবহার।</span>
+              </label>
+            </div>
+            <div class="pt-3 border-t border-current/10">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-highlight-theme mb-2">Saved Writing Drafts (<span id="saved-drafts-count">0</span>)</h4>
+              <div id="saved-drafts-list" class="space-y-2 max-h-48 overflow-y-auto text-xs"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUBVIEW C: IELTS LISTENING -->
+      <div id="skill-panel-listening" class="skill-panel hidden space-y-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-6 glass-card rounded-2xl p-6 space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="px-3 py-1 rounded-full badge-theme text-xs font-bold">Section 1 & 2 Audio Simulation</span>
+              <span class="text-xs text-highlight-theme font-semibold">Accessible Transcript Included</span>
+            </div>
+            <h2 class="text-xl font-bold">Portsville Community Hall Booking & Map Orientation</h2>
+            <p class="text-xs text-muted-theme">
+              ভাঙা অডিও প্লেয়ার এড়াতে নিচে বিল্ট-ইন ব্রাউজার Speech Synthesis অডিও প্লেয়ার এবং পূর্ণাঙ্গ অ্যাক্সেসিবল ট্রান্সক্রিপ্ট দেওয়া হয়েছে। এছাড়া E2 IELTS-এর ২৯ মিনিটের পূর্ণাঙ্গ অডিও টেস্টের যাচাইকৃত লিংক যুক্ত আছে।
+            </p>
+            <div class="p-4 rounded-2xl theme-surface space-y-3">
+              <div class="flex flex-wrap items-center gap-2">
+                <button type="button" id="play-listening-tts-btn" class="h-9 px-4 rounded-xl btn-primary-theme font-extrabold text-xs">
+                  ▶️ Play Practice Audio Clip
+                </button>
+                <button type="button" id="stop-listening-tts-btn" class="h-9 px-3 rounded-xl bg-rose-500/15 text-rose-400 border border-rose-500/30 font-bold text-xs">
+                  ⏹️ Stop Audio
+                </button>
+                <select id="listening-accent-select" aria-label="Select Accent" class="h-9 rounded-lg theme-input px-2.5 text-xs">
+                  <option value="en-GB">British Accent (en-GB)</option>
+                  <option value="en-US">North American (en-US)</option>
+                  <option value="en-AU">Australian (en-AU)</option>
+                </select>
+              </div>
+              <p id="listening-audio-status" class="text-[11px] text-emerald-400">Ready: Click Play to hear the dialogue with distractors.</p>
+            </div>
+
+            <div class="space-y-2">
+              <button type="button" id="toggle-transcript-btn" class="text-xs font-bold text-highlight-theme underline">
+                📄 Show / Hide Accessible Audio Transcript
+              </button>
+              <div id="listening-transcript-box" class="p-3.5 rounded-xl theme-surface text-xs space-y-1.5">
+                <p><strong>Receptionist:</strong> Good afternoon, Evenings Venue Hire. How can I help?</p>
+                <p><strong>Caller:</strong> Hello, I'd like to book a seminar room for June 16th. Are you still in the old Macquarie Building on Green Road?</p>
+                <p><strong>Receptionist:</strong> No, that's our old address—a classic distractor! We moved to the city center at Level 16B, <strong>Gemborough</strong> Road—that's spelled <strong>G-E-M-B-O-R-O-U-G-H</strong>, right beside the <strong>cinema</strong>, two blocks from the library. Our Governor Room holds a maximum of <strong>35</strong> people, while the State Room costs <strong>415</strong> dollars and includes a private <strong>kitchen</strong>.</p>
+              </div>
+            </div>
+
+            <div class="pt-2 border-t border-current/10 flex items-center justify-between">
+              <a href="https://www.youtube.com/watch?v=v3axTdVoYkY" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-highlight-theme hover:underline">
+                🔗 Open Full 29m E2 IELTS Audio Test on YouTube ↗
+              </a>
+              <button type="button" data-complete-lesson="lesson-listening-01" data-lesson-skill="listening" class="complete-lesson-btn h-9 px-4 rounded-xl badge-theme text-xs font-bold">
+                ✓ Mark Listening Completed
+              </button>
+            </div>
+          </div>
+
+          <div class="lg:col-span-6 glass-card rounded-2xl p-6 space-y-4">
+            <h3 class="text-lg font-bold">Form Completion (ONE WORD AND/OR A NUMBER)</h3>
+            <p class="text-xs text-muted-theme">অডিও বা ট্রান্সক্রিপ্ট শুনে ডিস্ট্র্যাক্টর এড়িয়ে সঠিক উত্তর লিখুন:</p>
+            <div class="space-y-3 text-xs md:text-sm">
+              <div>
+                <label for="listen-q1" class="block font-semibold mb-1">1. New venue street name: __________ Road (Watch spelling!)</label>
+                <input id="listen-q1" type="text" placeholder="e.g. Gemborough" class="w-full rounded-lg px-3 py-2 theme-input" />
+              </div>
+              <div>
+                <label for="listen-q2" class="block font-semibold mb-1">2. Landmark immediately beside the building: The __________</label>
+                <input id="listen-q2" type="text" placeholder="One word only" class="w-full rounded-lg px-3 py-2 theme-input" />
+              </div>
+              <div>
+                <label for="listen-q3" class="block font-semibold mb-1">3. Maximum capacity of the Governor Room: __________ people</label>
+                <input id="listen-q3" type="text" placeholder="Number" class="w-full rounded-lg px-3 py-2 theme-input" />
+              </div>
+            </div>
+            <button type="button" id="check-listening-btn" class="w-full h-11 rounded-xl btn-primary-theme font-extrabold text-sm">
+              Check Listening Answers & Distractor Analysis
+            </button>
+            <div id="listening-feedback-box" class="hidden p-4 rounded-xl theme-surface text-xs space-y-1.5"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUBVIEW D: IELTS SPEAKING -->
+      <div id="skill-panel-speaking" class="skill-panel hidden space-y-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-7 glass-card rounded-2xl p-6 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="px-3 py-1 rounded-full badge-theme text-xs font-bold">Part 1, Part 2 Cue Card & Part 3</span>
+              <div class="flex items-center gap-2">
+                <label for="cue-card-select" class="text-xs font-semibold">Cue Card Topic:</label>
+                <select id="cue-card-select" class="rounded-lg theme-input px-2.5 py-1 text-xs">
+                  <option value="advice">Describe a piece of good advice you recently received</option>
+                  <option value="skill">Describe a practical skill you learned outside school</option>
+                  <option value="place">Describe a quiet place in your city where you like to study</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="speaking-cue-card-box" class="p-5 rounded-2xl theme-surface space-y-2">
+              <div class="text-xs uppercase tracking-wider text-highlight-theme font-bold">IELTS Speaking Part 2 Cue Card</div>
+              <h3 id="cue-card-title" class="text-lg font-extrabold">Describe a piece of good advice that you recently received.</h3>
+              <p class="text-xs text-muted-theme">You should say:</p>
+              <ul id="cue-card-bullets" class="list-disc list-inside text-xs space-y-1">
+                <li>when and where you received this advice</li>
+                <li>who gave you the advice</li>
+                <li>what the advice actually was</li>
+                <li>and explain why you felt this advice was helpful for your life.</li>
+              </ul>
+            </div>
+
+            <!-- Timers & Browser Voice Recorder -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="p-4 rounded-xl theme-surface space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold">⏱️ 1-Min Prep / 2-Min Talk</span>
+                  <span id="speaking-timer-display" class="font-mono text-base font-extrabold text-highlight-theme">01:00</span>
+                </div>
+                <div class="flex gap-2">
+                  <button type="button" id="start-prep-timer-btn" class="flex-1 py-1.5 rounded-lg badge-theme text-xs font-bold">1m Prep</button>
+                  <button type="button" id="start-talk-timer-btn" class="flex-1 py-1.5 rounded-lg btn-primary-theme text-xs font-bold">2m Speak</button>
+                  <button type="button" id="reset-speak-timer-btn" class="px-2.5 py-1.5 rounded-lg border border-current/20 text-xs">Reset</button>
+                </div>
+              </div>
+
+              <div class="p-4 rounded-xl theme-surface space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold">🎙️ Local Self-Recording</span>
+                  <span id="recorder-status" class="text-[11px] text-muted-theme">Mic Permission Required</span>
+                </div>
+                <div class="flex gap-2">
+                  <button type="button" id="start-record-btn" class="flex-1 py-1.5 rounded-lg btn-primary-theme text-xs font-extrabold">Record</button>
+                  <button type="button" id="stop-record-btn" class="flex-1 py-1.5 rounded-lg bg-rose-500/15 text-rose-400 border border-rose-500/30 text-xs font-bold">Stop</button>
+                  <button type="button" id="delete-record-btn" class="px-2.5 py-1.5 rounded-lg border border-current/20 text-xs">Delete</button>
+                </div>
+                <audio id="speaking-audio-playback" controls class="hidden w-full h-8 mt-2"></audio>
+              </div>
+            </div>
+
+            <p class="text-[11px] text-muted-theme">
+              🔒 Privacy Guarantee: আপনার ভয়েস রেকর্ডিং শুধুমাত্র আপনার ব্রাউজারের মেমোরিতে থাকে—কখনোই স্বয়ংক্রিয়ভাবে কোনো সার্ভারে আপলোড হয় না।
+            </p>
+          </div>
+
+          <div class="lg:col-span-5 glass-card rounded-2xl p-6 space-y-4">
+            <h3 class="text-lg font-bold">1-Minute Planning Notes & Part 3 Discussion</h3>
+            <textarea id="speaking-notes-input" rows="5" placeholder="Jot down keywords during your 1-minute preparation (avoid writing full sentences)..." class="w-full rounded-xl p-3 theme-input text-xs"></textarea>
+            <div class="space-y-2 text-xs">
+              <h4 class="font-bold text-highlight-theme">Part 3 Follow-up Questions (Two-Way Discussion):</h4>
+              <p class="p-2.5 rounded-lg theme-surface">1. Do you think young people today make decisions differently compared to their parents' generation?</p>
+              <p class="p-2.5 rounded-lg theme-surface">2. Why do some people find it difficult to accept constructive advice from others?</p>
+              <p class="p-2.5 rounded-lg theme-surface">
+                <strong>বাংলা টিপস (Munzereen Shahid / Banglay IELTS):</strong> কখনোই "an advice" বা "many informations" বলবেন না—বলুন "a piece of advice"। উচ্চারণে ফেক অ্যাক্সেন্টের চেয়ে স্পষ্টতা (Clarity) বেশি জরুরি।
+              </p>
+            </div>
+            <button type="button" data-complete-lesson="lesson-speaking-01" data-lesson-skill="speaking" class="complete-lesson-btn w-full h-10 rounded-xl btn-primary-theme text-xs font-bold">
+              ✓ Mark Speaking Session Completed
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 3: SPOKEN ENGLISH ==================== -->
+    <section id="view-spoken" class="app-view hidden space-y-6">
+      <div class="flex flex-wrap items-center justify-between gap-4 border-b border-current/10 pb-4">
+        <div>
+          <h1 class="text-2xl md:text-3xl font-extrabold">Spoken English for Daily Life, Study & Work</h1>
+          <p class="text-xs md:text-sm text-muted-theme">প্রতিটি লেসনে প্রাকৃতিক ইংরেজি উদাহরণ, সহজ বাংলা ব্যাখ্যা এবং তাৎক্ষণিক কথোপকথন অনুশীলন।</p>
+        </div>
+        <div class="flex gap-2">
+          <button type="button" data-spoken-level="all" class="spoken-filter-btn h-8 px-3 rounded-lg text-xs font-bold btn-primary-theme">All Levels</button>
+          <button type="button" data-spoken-level="Beginner" class="spoken-filter-btn h-8 px-3 rounded-lg text-xs font-bold glass-card">Beginner</button>
+          <button type="button" data-spoken-level="Intermediate" class="spoken-filter-btn h-8 px-3 rounded-lg text-xs font-bold glass-card">Intermediate</button>
+          <button type="button" data-spoken-level="Advanced" class="spoken-filter-btn h-8 px-3 rounded-lg text-xs font-bold glass-card">Advanced</button>
+        </div>
+      </div>
+
+      <div id="spoken-lessons-grid" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div>
+    </section>
+
+    <!-- ==================== VIEW 4: VOCABULARY & GRAMMAR ==================== -->
+    <section id="view-vocab" class="app-view hidden space-y-8">
+      <div class="flex flex-wrap items-center justify-between gap-4 border-b border-current/10 pb-4">
+        <div>
+          <h1 class="text-2xl md:text-3xl font-extrabold">Academic Vocabulary Flashcards & Grammar in Context</h1>
+          <p class="text-xs md:text-sm text-muted-theme">Spaced Repetition স্ট্যাটাস (Known / Learning / Review) ট্র্যাক করুন—আপনার অগ্রগতি স্বয়ংক্রিয়ভাবে সংরক্ষিত থাকবে।</p>
+        </div>
+        <div class="flex items-center gap-2 text-xs font-bold">
+          <span class="px-3 py-1.5 rounded-lg theme-surface">Known: <strong id="vocab-known-count">0</strong></span>
+          <span class="px-3 py-1.5 rounded-lg theme-surface">Learning: <strong id="vocab-learning-count">0</strong></span>
+          <span class="px-3 py-1.5 rounded-lg theme-surface">Review: <strong id="vocab-review-count">0</strong></span>
+        </div>
+      </div>
+
+      <!-- Flashcards Grid -->
+      <div id="vocab-flashcards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+
+      <!-- Common Bengali Speaker Grammar Mistakes Section -->
+      <div class="glass-card rounded-2xl p-6 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <h2 class="text-xl font-bold">🛠️ Common IELTS Grammar Mistakes (বাংলা ব্যাখ্যাসহ সংশোধন)</h2>
+          <button type="button" data-complete-lesson="lesson-grammar-01" data-lesson-skill="grammar" class="complete-lesson-btn h-9 px-4 rounded-xl btn-primary-theme text-xs font-bold">
+            ✓ Mark Grammar Module Completed
+          </button>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs md:text-sm">
+          <div class="p-4 rounded-xl theme-surface space-y-1.5">
+            <p class="text-rose-400 line-through">❌ Incorrect: Peoples are facing many traffic problem in Dhaka city.</p>
+            <p class="text-emerald-400 font-bold">✅ Correct: People are facing numerous traffic problems in Dhaka.</p>
+            <p class="text-muted-theme text-xs"><strong>ব্যাখ্যা:</strong> 'People' নিজেই বহুবচন (Plural), তাই সাধারণ অর্থে 'peoples' হয় না। এছাড়া 'many' এর পরে গণনাযোগ্য বিশেষ্য বহুবচন ('problems') হবে।</p>
+          </div>
+          <div class="p-4 rounded-xl theme-surface space-y-1.5">
+            <p class="text-rose-400 line-through">❌ Incorrect: Although public transport is cheap, but many commuters prefer cars.</p>
+            <p class="text-emerald-400 font-bold">✅ Correct: Although public transport is affordable, many commuters prefer private cars.</p>
+            <p class="text-muted-theme text-xs"><strong>ব্যাখ্যা:</strong> ইংরেজি বাক্যে 'Although' বা 'Though' ব্যবহার করলে একই বাক্যে আবার 'but' ব্যবহার করা ডাবল কনজাংশন ভুল।</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 5: SMART YOUTUBE RESOURCE ENGINE (SECTION 26) ==================== -->
+    <section id="view-youtube" class="app-view hidden space-y-6">
+      <div class="rounded-3xl hero-surface p-6 md:p-8 text-white space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <span class="px-3 py-1 rounded-full bg-leaf text-forest text-xs font-extrabold uppercase tracking-wide">
+            100-Point Evidence-Based Evaluation Model
+          </span>
+          <span class="text-xs text-slate-200">Last Catalog Verification: 2026-10-26</span>
+        </div>
+        <h1 class="text-2xl md:text-4xl font-extrabold text-white">Smart YouTube Resource Research & Recommendation Engine</h1>
+        <p class="text-xs md:text-sm text-slate-100 max-w-3xl leading-relaxed">
+          শুধুমাত্র ভিউ বা সাবস্ক্রাইবার সংখ্যা দেখে নয়—প্রতিটি ভিডিও ও প্লেলিস্টের <strong>অফিসিয়াল ট্রান্সক্রিপ্ট, সিলেবাস কভারেজ, ব্যাখ্যার স্পষ্টতা এবং অনুশীলনের মান</strong> ১০০ পয়েন্টের ৭টি মানদণ্ডে যাচাই করে তালিকাভুক্ত করা হয়েছে।
+        </p>
+
+        <!-- 100-Point Evaluation Rubric Pill Bar -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 pt-2 text-[11px]">
+          <div class="p-2.5 rounded-xl bg-black/30 border border-white/15">
+            <div class="font-bold text-leaf">25 pts</div>
+            <div class="text-slate-200">Educational Accuracy</div>
+          </div>
+          <div class="p-2.5 rounded-xl bg-black/30 border border-white/15">
+            <div class="font-bold text-leaf">20 pts</div>
+            <div class="text-slate-200">Syllabus Coverage</div>
+          </div>
+          <div class="p-2.5 rounded-xl bg-black/30 border border-white/15">
+            <div class="font-bold text-leaf">15 pts</div>
+            <div class="text-slate-200">Explanation Clarity</div>
+          </div>
+          <div class="p-2.5 rounded-xl bg-black/30 border border-white/15">
+            <div class="font-bold text-leaf">15 pts</div>
+            <div class="text-slate-200">Practice & Answers</div>
+          </div>
+          <div class="p-2.5 rounded-xl bg-black/30 border border-white/15">
+            <div class="font-bold text-leaf">10 pts</div>
+            <div class="text-slate-200">Level Suitability</div>
+          </div>
+          <div class="p-2.5 rounded-xl bg-black/30 border border-white/15">
+            <div class="font-bold text-leaf">10 pts</div>
+            <div class="text-slate-200">Playlist Structure</div>
+          </div>
+          <div class="p-2.5 rounded-xl bg-black/30 border border-white/15">
+            <div class="font-bold text-leaf">5 pts</div>
+            <div class="text-slate-200">Recent Relevance</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search & Multi-Filter Controls -->
+      <div class="glass-card rounded-2xl p-5 space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-3">
+          <div class="md:col-span-5">
+            <label for="yt-search-input" class="block text-xs font-bold mb-1">Search by Topic, Channel, or Natural Query:</label>
+            <input id="yt-search-input" type="search" placeholder="যেমন: বাংলায় Writing Task 2, True False Not Given, Listening mock..." class="w-full rounded-xl px-3.5 py-2.5 theme-input text-xs" />
+          </div>
+          <div class="md:col-span-2">
+            <label for="yt-skill-select" class="block text-xs font-bold mb-1">Skill Route:</label>
+            <select id="yt-skill-select" class="w-full rounded-xl px-3 py-2.5 theme-input text-xs">
+              <option value="all">All Skills (/youtube-resources)</option>
+              <option value="reading">/reading</option>
+              <option value="writing">/writing</option>
+              <option value="listening">/listening</option>
+              <option value="speaking">/speaking</option>
+              <option value="spoken-english">/spoken-english</option>
+              <option value="grammar">/grammar</option>
+              <option value="vocabulary">/vocabulary</option>
+              <option value="mock-tests">/mock-tests</option>
+            </select>
+          </div>
+          <div class="md:col-span-2">
+            <label for="yt-lang-select" class="block text-xs font-bold mb-1">Language:</label>
+            <select id="yt-lang-select" class="w-full rounded-xl px-3 py-2.5 theme-input text-xs">
+              <option value="all">বাংলা + English</option>
+              <option value="bn">বাংলা (Bengali)</option>
+              <option value="en">English</option>
+            </select>
+          </div>
+          <div class="md:col-span-3">
+            <label for="yt-filter-status" class="block text-xs font-bold mb-1">Personal Filter:</label>
+            <select id="yt-filter-status" class="w-full rounded-xl px-3 py-2.5 theme-input text-xs">
+              <option value="all">All Verified Resources</option>
+              <option value="saved">⭐ Saved to My Learning Plan</option>
+              <option value="unwatched">👀 Not Yet Watched</option>
+              <option value="watched">✅ Watched / Completed</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Quick Sample Search Chips -->
+        <div class="flex flex-wrap items-center gap-2 text-[11px]">
+          <span class="font-bold text-muted-theme">Quick Searches:</span>
+          <button type="button" data-yt-quick="Writing Task 2" class="yt-quick-chip px-2.5 py-1 rounded-full theme-surface hover:opacity-85 transition">Writing Task 2</button>
+          <button type="button" data-yt-quick="True False Not Given" class="yt-quick-chip px-2.5 py-1 rounded-full theme-surface hover:opacity-85 transition">True False Not Given</button>
+          <button type="button" data-yt-quick="Bangla" class="yt-quick-chip px-2.5 py-1 rounded-full theme-surface hover:opacity-85 transition">বাংলা টিউটোরিয়াল</button>
+          <button type="button" data-yt-quick="Listening" class="yt-quick-chip px-2.5 py-1 rounded-full theme-surface hover:opacity-85 transition">Listening Mock & Map</button>
+          <button type="button" data-yt-quick="" class="yt-quick-chip px-2.5 py-1 rounded-full badge-theme font-bold">Reset Filters</button>
+        </div>
+      </div>
+
+      <!-- Personalized Recommendation Callout -->
+      <div id="yt-personal-banner" class="glass-card rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3 text-xs">
+        <div>
+          <strong class="text-highlight-theme">🎯 আপনার প্রোফাইল অনুযায়ী সুপারিশ:</strong>
+          <span id="yt-personal-text">আপনার দুর্বল স্কিল (Writing ও Speaking) এবং নির্বাচিত ভাষার ওপর ভিত্তি করে নিচের রিসোর্সগুলো সাজানো হয়েছে।</span>
+        </div>
+        <button type="button" data-nav="planner" class="h-8 px-3 rounded-lg btn-primary-theme font-bold">Update My Profile & Routine</button>
+      </div>
+
+      <!-- YouTube Cards Container -->
+      <div id="youtube-cards-container" class="grid grid-cols-1 lg:grid-cols-2 gap-6"></div>
+    </section>
+
+    <!-- ==================== VIEW 6: PRACTICE ENGINE & MOCK TESTS ==================== -->
+    <section id="view-practice" class="app-view hidden space-y-6">
+      <div class="flex flex-wrap items-center justify-between gap-4 border-b border-current/10 pb-4">
+        <div>
+          <h1 class="text-2xl md:text-3xl font-extrabold">Reusable Practice & Mock Test Engine</h1>
+          <p class="text-xs md:text-sm text-muted-theme">টাইমার, প্রশ্ন নেভিগেশন, উত্তর রিভিউ, শুধুমাত্র ভুল উত্তরগুলোর পুনরায় অনুশীলন (Retry Wrong Answers) এবং নির্ভুল অ্যাকুরেসি ট্র্যাকিং।</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <span id="quiz-timer-badge" class="font-mono text-sm font-bold px-3.5 py-1.5 rounded-xl theme-surface">⏱️ 12:00</span>
+          <button type="button" id="retry-wrong-quiz-btn" class="hidden h-9 px-4 rounded-xl btn-primary-theme font-extrabold text-xs">
+            🔄 Retry Wrong Answers Only
+          </button>
+          <button type="button" id="reset-full-quiz-btn" class="h-9 px-4 rounded-xl theme-surface text-xs font-bold">
+            Reset Full Set
+          </button>
+        </div>
+      </div>
+
+      <div class="p-3.5 rounded-xl theme-surface text-xs flex items-center justify-between gap-2">
+        <span>⚠️ <strong>গুরুত্বপূর্ণ নোট:</strong> এই অনুশীলনের ফলাফল আপনার সঠিক উত্তরের হার (Accuracy %) নির্ণয় করে; এটিকে আনুষ্ঠানিক IELTS বা ব্রিটিশ কাউন্সিল/IDP প্রদত্ত অফিসিয়াল ব্যান্ড স্কোর হিসেবে গণ্য করবেন না।</span>
+      </div>
+
+      <div id="quiz-questions-container" class="space-y-4"></div>
+
+      <div class="flex flex-wrap items-center justify-between gap-4 pt-2">
+        <button type="button" id="submit-quiz-engine-btn" class="h-11 px-6 rounded-xl btn-primary-theme font-extrabold text-sm shadow-md">
+          Submit Practice Test & Save Attempt
+        </button>
+        <div id="quiz-score-banner" class="hidden glass-card rounded-xl px-5 py-3 text-sm font-bold"></div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 7: 2-12 MONTH PERSONALIZED STUDY PLANNER ==================== -->
+    <section id="view-planner" class="app-view hidden space-y-8">
+      <div class="flex flex-wrap items-center justify-between gap-4 border-b border-current/10 pb-4">
+        <div>
+          <h1 class="text-2xl md:text-3xl font-extrabold">Personalized 2 to 12 Month Study Planner & Routine Builder</h1>
+          <p class="text-xs md:text-sm text-muted-theme">আপনার বর্তমান স্তর, লক্ষ্য ব্যান্ড, দুর্বল স্কিল এবং দৈনিক সময় অনুযায়ী নির্ভুল ও পুনরায় উৎপাদনযোগ্য (Deterministic) রুটিন তৈরি করুন।</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Onboarding & Plan Generator Form -->
+        <form id="study-planner-form" class="lg:col-span-5 glass-card rounded-2xl p-6 space-y-4">
+          <h2 class="text-lg font-bold">১. আপনার স্টাডি প্ল্যান কনফিগারেশন (২–১২ মাস)</h2>
+
+          <div class="grid grid-cols-2 gap-3 text-xs">
+            <div>
+              <label for="plan-duration" class="block font-bold mb-1">প্রস্তুতির সময়কাল (Duration):</label>
+              <select id="plan-duration" class="w-full rounded-xl px-3 py-2 theme-input">
+                <option value="2">2 Months (60 Days)</option>
+                <option value="3" selected>3 Months (90 Days)</option>
+                <option value="4">4 Months (120 Days)</option>
+                <option value="5">5 Months (150 Days)</option>
+                <option value="6">6 Months (180 Days)</option>
+                <option value="7">7 Months (210 Days)</option>
+                <option value="8">8 Months (240 Days)</option>
+                <option value="9">9 Months (270 Days)</option>
+                <option value="10">10 Months (300 Days)</option>
+                <option value="11">11 Months (330 Days)</option>
+                <option value="12">12 Months (360 Days)</option>
+              </select>
+            </div>
+            <div>
+              <label for="plan-target-band" class="block font-bold mb-1">Target IELTS Band:</label>
+              <select id="plan-target-band" class="w-full rounded-xl px-3 py-2 theme-input">
+                <option value="6.0">Band 6.0</option>
+                <option value="6.5">Band 6.5</option>
+                <option value="7.0" selected>Band 7.0</option>
+                <option value="7.5">Band 7.5</option>
+                <option value="8.0">Band 8.0+</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 text-xs">
+            <div>
+              <label for="plan-level" class="block font-bold mb-1">Current English Level:</label>
+              <select id="plan-level" class="w-full rounded-xl px-3 py-2 theme-input">
+                <option value="Beginner" selected>Beginner (শুরু থেকে)</option>
+                <option value="Intermediate">Intermediate (মধ্যম)</option>
+                <option value="Advanced">Advanced (উন্নত)</option>
+              </select>
+            </div>
+            <div>
+              <label for="plan-daily-mins" class="block font-bold mb-1">Daily Study Time:</label>
+              <select id="plan-daily-mins" class="w-full rounded-xl px-3 py-2 theme-input">
+                <option value="45">45 Minutes / Day</option>
+                <option value="60" selected>60 Minutes (1 Hour)</option>
+                <option value="90">90 Minutes (1.5 Hours)</option>
+                <option value="120">120 Minutes (2 Hours)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 text-xs">
+            <div>
+              <label for="plan-module" class="block font-bold mb-1">IELTS Module:</label>
+              <select id="plan-module" class="w-full rounded-xl px-3 py-2 theme-input">
+                <option value="Academic" selected>Academic</option>
+                <option value="General Training">General Training</option>
+              </select>
+            </div>
+            <div>
+              <label for="plan-weak-skill" class="block font-bold mb-1">Primary Weak Skill (Extra Focus):</label>
+              <select id="plan-weak-skill" class="w-full rounded-xl px-3 py-2 theme-input">
+                <option value="writing" selected>Writing (Task 1 & 2)</option>
+                <option value="speaking">Speaking (Cue Cards)</option>
+                <option value="reading">Reading (TFNG & Headings)</option>
+                <option value="listening">Listening (Maps & MCQs)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="text-xs space-y-1.5">
+            <span class="block font-bold">সপ্তাহে কোন কোন দিন পড়বেন (Active Study Days):</span>
+            <div class="flex flex-wrap gap-1.5" id="weekday-checkboxes">
+              <label class="px-2.5 py-1 rounded-lg theme-surface cursor-pointer"><input type="checkbox" value="0" checked class="mr-1" />Sun</label>
+              <label class="px-2.5 py-1 rounded-lg theme-surface cursor-pointer"><input type="checkbox" value="1" checked class="mr-1" />Mon</label>
+              <label class="px-2.5 py-1 rounded-lg theme-surface cursor-pointer"><input type="checkbox" value="2" checked class="mr-1" />Tue</label>
+              <label class="px-2.5 py-1 rounded-lg theme-surface cursor-pointer"><input type="checkbox" value="3" checked class="mr-1" />Wed</label>
+              <label class="px-2.5 py-1 rounded-lg theme-surface cursor-pointer"><input type="checkbox" value="4" checked class="mr-1" />Thu</label>
+              <label class="px-2.5 py-1 rounded-lg theme-surface cursor-pointer"><input type="checkbox" value="5" class="mr-1" />Fri (Rest)</label>
+              <label class="px-2.5 py-1 rounded-lg theme-surface cursor-pointer"><input type="checkbox" value="6" checked class="mr-1" />Sat</label>
+            </div>
+          </div>
+
+          <button type="submit" class="w-full h-11 rounded-xl btn-primary-theme font-extrabold text-xs md:text-sm shadow-sm">
+            ⚡ Generate Deterministic Study Plan & Save
+          </button>
+
+          <!-- Custom Task Builder -->
+          <div class="pt-4 border-t border-current/10 space-y-3">
+            <h3 class="text-sm font-bold text-highlight-theme">➕ Add Custom Task to My Routine</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+              <input id="custom-task-title" type="text" placeholder="Task title (e.g. Cambridge 18 Test 2)" class="sm:col-span-2 rounded-lg px-3 py-2 theme-input" />
+              <input id="custom-task-mins" type="number" min="5" max="180" value="30" placeholder="Mins" class="rounded-lg px-3 py-2 theme-input" />
+            </div>
+            <div class="flex gap-2">
+              <select id="custom-task-skill" class="rounded-lg px-3 py-2 theme-input text-xs flex-1">
+                <option value="reading">Reading</option>
+                <option value="writing">Writing</option>
+                <option value="listening">Listening</option>
+                <option value="speaking">Speaking</option>
+                <option value="vocabulary">Vocabulary</option>
+              </select>
+              <button type="button" id="add-custom-task-btn" class="h-9 px-4 rounded-lg btn-primary-theme font-bold text-xs">
+                + Add Task
+              </button>
+              <button type="button" id="reschedule-unfinished-btn" class="h-9 px-3 rounded-lg theme-surface font-bold text-xs" title="Move unfinished tasks forward">
+                ↪ Reschedule Unfinished
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <!-- Generated Routine Display -->
+        <div class="lg:col-span-7 glass-card rounded-2xl p-6 space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h2 class="text-lg font-bold" id="routine-summary-title">Active Routine Schedule</h2>
+              <p class="text-xs text-muted-theme" id="routine-summary-meta">Showing upcoming days and custom tasks</p>
+            </div>
+            <span class="px-3 py-1 rounded-full badge-theme text-xs font-bold">Completed: <strong id="routine-completed-count">0</strong></span>
+          </div>
+
+          <div id="planner-tasks-list" class="space-y-3 max-h-[540px] overflow-y-auto pr-1"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 8: PROGRESS TRACKING DASHBOARD (SECTION 10) ==================== -->
+    <section id="view-dashboard" class="app-view hidden space-y-8">
+      <div class="flex flex-wrap items-center justify-between gap-4 border-b border-current/10 pb-4">
+        <div>
+          <h1 class="text-2xl md:text-3xl font-extrabold">Personal Progress Tracking Dashboard</h1>
+          <p class="text-xs md:text-sm text-muted-theme">কোনো ভুয়া স্কোর বা কাল্পনিক গ্রাফ নয়—শুধুমাত্র আপনার সম্পন্ন করা লেসন, কুইজ এবং স্টাডি সেশনের প্রকৃত হিসাব।</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button type="button" id="log-session-btn" class="h-9 px-4 rounded-xl btn-primary-theme font-extrabold text-xs">
+            + Log 25m Study Session (Deduplicated)
+          </button>
+        </div>
+      </div>
+
+      <!-- Top 4 KPI Metrics -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="glass-card rounded-2xl p-5 space-y-1">
+          <div class="text-xs text-muted-theme">Overall Course Completion</div>
+          <div id="kpi-overall-pct" class="text-2xl md:text-3xl font-extrabold">0%</div>
+          <div id="kpi-lessons-count" class="text-[11px] text-muted-theme">0 / 15 Eligible Lessons</div>
+        </div>
+        <div class="glass-card rounded-2xl p-5 space-y-1">
+          <div class="text-xs text-muted-theme">Practice Accuracy</div>
+          <div id="kpi-accuracy-text" class="text-xl md:text-2xl font-extrabold text-highlight-theme">No attempts yet</div>
+          <div id="kpi-attempts-sub" class="text-[11px] text-muted-theme">Correct / Attempted Questions</div>
+        </div>
+        <div class="glass-card rounded-2xl p-5 space-y-1">
+          <div class="text-xs text-muted-theme">Total Verified Study Time</div>
+          <div id="kpi-study-mins" class="text-2xl md:text-3xl font-extrabold">0 mins</div>
+          <div class="text-[11px] text-muted-theme">Duplicate-Safe Session Log</div>
+        </div>
+        <div class="glass-card rounded-2xl p-5 space-y-1">
+          <div class="text-xs text-muted-theme">Active Study Streak</div>
+          <div id="kpi-streak-days" class="text-2xl md:text-3xl font-extrabold text-emerald-400">0 Days</div>
+          <div class="text-[11px] text-muted-theme">Target Band: <strong id="kpi-target-band">7.0</strong></div>
+        </div>
+      </div>
+
+      <!-- Skill-wise Progress Breakdown Table (Individual Denominators per Skill) -->
+      <div class="glass-card rounded-2xl p-6 space-y-4">
+        <h2 class="text-lg font-bold">Skill-Wise Progress & Accuracy (Separate Denominator per Skill)</h2>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs md:text-sm">
+            <thead>
+              <tr class="border-b border-current/15 text-highlight-theme">
+                <th class="py-2.5 pr-4">Skill Module</th>
+                <th class="py-2.5 px-4">Completed / Eligible</th>
+                <th class="py-2.5 px-4">Course Completion</th>
+                <th class="py-2.5 pl-4 text-right">Practice Accuracy</th>
+              </tr>
+            </thead>
+            <tbody id="dashboard-skill-rows" class="divide-y divide-current/10"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Saved YouTube Resources & Reminders in Dashboard -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="glass-card rounded-2xl p-6 space-y-3">
+          <h3 class="text-lg font-bold">⭐ Saved YouTube Resources & Watch Status</h3>
+          <div id="dashboard-saved-yt" class="space-y-2 text-xs"></div>
+        </div>
+        <div class="glass-card rounded-2xl p-6 space-y-3">
+          <h3 class="text-lg font-bold">🔔 Study Habits & In-App Reminders</h3>
+          <p class="text-xs text-muted-theme">ব্রাউজার পুশ নোটিফিকেশন অনুমতি ছাড়া জোরপূর্বক চালু দেখানো হয় না। আপনার ড্যাশবোর্ডের সক্রিয় রিমাইন্ডার:</p>
+          <div id="dashboard-reminders-box" class="space-y-2 text-xs"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 9: FREE RESOURCE LIBRARY ==================== -->
+    <section id="view-resources" class="app-view hidden space-y-6">
+      <div class="border-b border-current/10 pb-4">
+        <h1 class="text-2xl md:text-3xl font-extrabold">Free Verified Resource Library</h1>
+        <p class="text-xs md:text-sm text-muted-theme">অফিসিয়াল IELTS গাইডলাইন এবং যাচাইকৃত ফ্রি থার্ড-পার্টি রিসোর্স এখানে স্পষ্টভাবে আলাদা করে দেখানো হয়েছে।</p>
+      </div>
+      <div id="free-library-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+    </section>
+
+    <!-- ==================== VIEW 10: INSTANT CREATE ACCOUNT (NO LOGIN REQUIRED) ==================== -->
+    <section id="view-login" class="app-view hidden py-6">
+      <div class="max-w-md mx-auto gold-glow-card rounded-3xl p-8 space-y-6 relative overflow-hidden">
+        <div class="text-center space-y-2">
+          <div class="w-14 h-14 mx-auto rounded-2xl theme-surface flex items-center justify-center text-2xl font-extrabold">
+            👤
+          </div>
+          <h1 class="text-2xl font-extrabold tracking-tight">Create My Learner Account</h1>
+          <p class="text-xs text-muted-theme leading-relaxed">
+            কোনো Google লগইন বা পাসওয়ার্ডের প্রয়োজন নেই। আপনার নাম ও লক্ষ্য লিখুন এবং <strong>Create Account</strong> চাপুন—আপনার অ্যাকাউন্ট ও সম্পূর্ণ অগ্রগতি সাথে সাথে সেভ হয়ে যাবে।
+          </p>
+        </div>
+
+        <div class="space-y-4 text-xs">
+          <div>
+            <label for="account-name-input" class="block font-bold mb-1.5">আপনার নাম (Your Full Name):</label>
+            <input id="account-name-input" type="text" placeholder="যেমন: তানভীর আহমেদ (Tanvir Ahmed)" class="w-full rounded-xl px-3.5 py-2.5 theme-input text-sm" />
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label for="account-band-select" class="block font-bold mb-1.5">Target Band Score:</label>
+              <select id="account-band-select" class="w-full rounded-xl px-3 py-2.5 theme-input">
+                <option value="6.5">Band 6.5</option>
+                <option value="7.0" selected>Band 7.0</option>
+                <option value="7.5">Band 7.5</option>
+                <option value="8.0">Band 8.0+</option>
+              </select>
+            </div>
+            <div>
+              <label for="account-module-select" class="block font-bold mb-1.5">IELTS Module:</label>
+              <select id="account-module-select" class="w-full rounded-xl px-3 py-2.5 theme-input">
+                <option value="Academic" selected>Academic</option>
+                <option value="General Training">General Training</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="saved-account-badge" class="hidden p-3.5 rounded-xl theme-surface text-xs space-y-1">
+            <div class="font-bold text-emerald-400">✓ Account Active & Automatically Saved</div>
+            <div id="saved-account-summary" class="text-muted-theme"></div>
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <button type="button" id="google-signin-action-btn" class="w-full h-11 px-4 rounded-xl btn-primary-theme font-extrabold text-sm flex items-center justify-center gap-2 transition shadow-md">
+            <span>✓ Create Account & Save Progress</span>
+          </button>
+          <button type="button" id="delete-account-data-btn" class="w-full h-10 px-4 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-400 font-bold text-xs hover:bg-rose-500/25 transition">
+            🗑️ Reset Account & Clear Saved Progress
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-12 border-t border-current/10 py-8 px-4 text-xs text-muted-theme">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div>
+        <strong>IELTS Pathway</strong> — Free Bilingual IELTS & Spoken English Learning Platform.
+      </div>
+      <div class="flex flex-wrap gap-4">
+        <button type="button" data-nav="home" class="hover:underline">Home</button>
+        <button type="button" data-nav="youtube" class="hover:underline">YouTube Resources</button>
+        <button type="button" data-nav="planner" class="hover:underline">Study Planner</button>
+        <button type="button" data-nav="dashboard" class="hover:underline">Progress Dashboard</button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Complete Application State & Logic -->
+  <script>
+    (function () {
+      // ---------- 1. SAFE LOCAL STORAGE & CENTRAL 3-MODE THEME PERSISTENCE ----------
+      const STORAGE_KEY = 'ielts_pathway_state_v1';
+      const THEME_STORAGE_KEY = 'ielts_pathway_theme';
+      const VALID_THEMES = ['default', 'white', 'black'];
+
+      const defaultState = {
+        lang: 'bn',
+        theme: 'default', // Default Mode — Forest & Leaf is the initial theme for first-time visitors
+        currentView: 'home',
+        currentSkillTab: 'reading',
+        user: null,
+        completedLessons: [],
+        practiceAttempts: [],
+        studySessions: [],
+        vocabStatus: {
+          'vocab-1': 'learning',
+          'vocab-2': 'known',
+          'vocab-3': 'review',
+          'vocab-4': 'learning',
+          'vocab-5': 'review',
+          'vocab-6': 'learning'
+        },
+        savedYouTubeIds: ['yt-ielts-advantage-task2-6hr', 'yt-banglay-ielts-listening-map'],
+        watchedYouTubeIds: [],
+        writingDraftText: '',
+        savedWritingDrafts: [],
+        planConfig: {
+          durationMonths: 3,
+          targetBand: '7.0',
+          level: 'Beginner',
+          dailyMinutes: 60,
+          module: 'Academic',
+          weakSkill: 'writing',
+          studyDays: [0, 1, 2, 3, 4, 6]
+        },
+        routineTasks: []
+      };
+
+      function normalizeTheme(val) {
+        if (VALID_THEMES.includes(val)) return val;
+        return 'default';
+      }
+
+      function loadState() {
+        try {
+          const base = JSON.parse(JSON.stringify(defaultState));
+          const explicitTheme = localStorage.getItem(THEME_STORAGE_KEY);
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            Object.assign(base, parsed);
+          }
+          base.theme = normalizeTheme(explicitTheme || base.theme);
+          return base;
+        } catch (err) {
+          return JSON.parse(JSON.stringify(defaultState));
+        }
+      }
+
+      function saveState() {
+        try {
+          localStorage.setItem(THEME_STORAGE_KEY, normalizeTheme(state.theme));
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } catch (err) {
+          // Ignore sandbox storage quota errors
+        }
+      }
+
+      let state = loadState();
+
+      function showToast(message) {
+        const container = document.getElementById('toast-container');
+        if (!container) return;
+        const el = document.createElement('div');
+        el.className = 'px-4 py-3 rounded-xl shadow-xl text-xs font-bold transition-all btn-primary-theme';
+        el.textContent = message;
+        container.appendChild(el);
+        setTimeout(function () {
+          el.remove();
+        }, 3000);
+      }
+
+      // ---------- 2. VERIFIED YOUTUBE RESOURCE CATALOG ----------
+      const YOUTUBE_CATALOG = [
+        {
+          id: 'yt-ielts-advantage-task2-6hr',
+          videoId: 'wzdG66VK75c',
+          channelName: 'IELTS Advantage',
+          channelUrl: 'https://www.youtube.com/@IELTSAdvantage',
+          title: 'IELTS Writing Task 2: Complete 6-Hour Course [+ Free Task 2 PDF]',
+          officialUrl: 'https://www.youtube.com/watch?v=wzdG66VK75c',
+          skill: 'writing',
+          lang: 'en',
+          difficulty: 'Intermediate',
+          suitability: 'Academic & General Training',
+          type: 'Course (6h 09m)',
+          freeStatus: '100% Free Video (Optional VIP course exists)',
+          verifiedDate: '2026-10-26',
+          score: 96,
+          rubric: { accuracy: 24, coverage: 19, clarity: 15, practice: 14, level: 9, structure: 10, relevance: 5 },
+          badges: ['Best Overall Free Resource', 'Best for Writing'],
+          whyBn: 'ট্রান্সক্রিপ্ট দ্বারা যাচাইকৃত এই ৬ ঘণ্টার মাস্টারক্লাসে ভুয়া পরিসংখ্যান (যেমন ৯৮% মানুষ) বর্জন করে ৪টি অফিসিয়াল মার্কিং ক্রাইটেরিয়া অনুযায়ী সরাসরি ব্যান্ড ৯ প্রবন্ধ ও চিঠি লিখে দেখানো হয়েছে।',
+          whyEn: 'Transcript-verified 6-hour course debunking fake statistics and teaching the 4 official marking criteria with live essay drafting.',
+          taught: '4 Marking Criteria, Main Point -> Explain -> Example structure, Live Band 9 essay & GT letter',
+          notTaught: 'Academic Task 1 chart description'
+        },
+        {
+          id: 'yt-ielts-liz-tfng',
+          videoId: 'WYl9PX7Ua_Q',
+          channelName: 'IELTS Liz',
+          channelUrl: 'https://www.youtube.com/@ieltsliz',
+          title: 'IELTS Reading Tips: True False Not Given',
+          officialUrl: 'https://www.youtube.com/watch?v=WYl9PX7Ua_Q',
+          skill: 'reading',
+          lang: 'en',
+          difficulty: 'Beginner',
+          suitability: 'Academic & General Training',
+          type: 'Video (24m 06s)',
+          freeStatus: '100% Free Public Resource',
+          verifiedDate: '2026-10-26',
+          score: 95,
+          rubric: { accuracy: 25, coverage: 17, clarity: 15, practice: 15, level: 10, structure: 9, relevance: 4 },
+          badges: ['Best for Reading Strategies', 'Best for Beginners'],
+          whyBn: 'True/False/Not Given এবং Yes/No/Not Given-এর পার্থক্য এবং "all" বনাম "majority" কোয়ান্টিফায়ার ট্র্যাপ ৩টি বাস্তব উদাহরণসহ অত্যন্ত স্পষ্টভাবে শেখানো হয়েছে।',
+          whyEn: 'Step-by-step analysis of quantifier traps ("all" vs "majority"), comparisons, and TFNG vs YNNG rules.',
+          taught: 'TFNG vs YNNG distinction, 3 worked passage examples, 10 golden reading tips',
+          notTaught: 'Matching Headings & Summary Completion'
+        },
+        {
+          id: 'yt-e2-listening-mock',
+          videoId: 'v3axTdVoYkY',
+          channelName: 'E2 IELTS',
+          channelUrl: 'https://www.youtube.com/@E2IELTS',
+          title: 'IELTS Listening Practice Test with Answers',
+          officialUrl: 'https://www.youtube.com/watch?v=v3axTdVoYkY',
+          skill: 'mock-tests',
+          lang: 'en',
+          difficulty: 'Intermediate',
+          suitability: 'Academic & General Training',
+          type: 'Practice Test (29m 00s)',
+          freeStatus: '100% Free Video',
+          verifiedDate: '2026-10-26',
+          score: 94,
+          rubric: { accuracy: 24, coverage: 19, clarity: 14, practice: 15, level: 9, structure: 9, relevance: 4 },
+          badges: ['Best Practice-Test Resource', 'Best for Listening Practice'],
+          whyBn: '৪টি পার্টের ৩০টি প্রশ্নের পূর্ণাঙ্গ লিসেনিং টেস্ট এবং শেষে শিক্ষক মার্কের মাধ্যমে প্রতিটি ডিস্ট্র্যাক্টর (Green Road বনাম Gemborough Road) ও প্লুরাল বানানের বিস্তারিত ব্যাখ্যা।',
+          whyEn: 'Full 4-part simulated listening test followed by teacher walkthrough explaining every distractor and plural spelling trap.',
+          taught: 'Form completion, Foster Park map labeling, Part 3 discussion, Part 4 termite mound diagram + full answer review',
+          notTaught: 'Reading or Writing mock sections'
+        },
+        {
+          id: 'yt-bbc-6min-vocab-megaclass',
+          videoId: 'fcN0BXzK8bg',
+          channelName: 'BBC Learning English',
+          channelUrl: 'https://www.youtube.com/@bbclearningenglish',
+          title: "BOX SET: 6 Minute English 'Language' Mega-Class (1 Hour Vocabulary)",
+          officialUrl: 'https://www.youtube.com/watch?v=fcN0BXzK8bg',
+          skill: 'vocabulary',
+          lang: 'en',
+          difficulty: 'Intermediate',
+          suitability: 'IELTS & Spoken English',
+          type: 'Compilation (1h 07m)',
+          freeStatus: '100% Free Public Resource',
+          verifiedDate: '2026-10-26',
+          score: 95,
+          rubric: { accuracy: 25, coverage: 18, clarity: 15, practice: 14, level: 9, structure: 10, relevance: 4 },
+          badges: ['Best for Grammar and Vocabulary', 'Best English-Language Learning'],
+          whyBn: 'বিবিসি লার্নিং ইংলিশের এই ১ ঘণ্টার পর্বে বাস্তব কথোপকথনের মাধ্যমে গুরুত্বপূর্ণ একাডেমিক শব্দভাণ্ডার (diminish, intensity of engagement, faux pas) এবং লিসেনিং স্কিল শেখানো হয়েছে।',
+          whyEn: 'Authentic BBC topical discussions teaching high-utility academic collocations and high-frequency lemma foundations.',
+          taught: 'Contextual vocabulary definitions across 11 episodes, quiz questions, and example sentences',
+          notTaught: 'IELTS exam timing mechanics'
+        },
+        {
+          id: 'yt-banglay-ielts-listening-map',
+          videoId: '4dpsDH1POtk',
+          channelName: 'Banglay IELTS',
+          channelUrl: 'https://www.youtube.com/@banglayielts',
+          title: 'IELTS Listening : Map Tips and Tricks in Bangla',
+          officialUrl: 'https://www.youtube.com/watch?v=4dpsDH1POtk',
+          skill: 'listening',
+          lang: 'bn',
+          difficulty: 'Beginner',
+          suitability: 'Academic & General Training',
+          type: 'Video (22m 46s)',
+          freeStatus: '100% Free Video',
+          verifiedDate: '2026-10-26',
+          score: 88,
+          rubric: { accuracy: 22, coverage: 16, clarity: 14, practice: 14, level: 10, structure: 8, relevance: 4 },
+          badges: ['Best Bengali Explanation', 'Best for Listening Practice'],
+          whyBn: 'ক্যামব্রিজ IELTS-এর ম্যাপ উদাহরণ ব্যবহার করে বাংলায় দিকনির্দেশনা (North/South/East/West, opposite, beside) ও স্টার্টিং পয়েন্ট ট্র্যাকিং খুব সহজভাবে বোঝানো হয়েছে।',
+          whyEn: 'Explains IELTS Listening Section 2 Map Labeling in clear Bengali using Cambridge test maps and directional vocabulary.',
+          taught: 'Compass orientation, starting-point tracking, directional prepositions in Bengali',
+          notTaught: 'Listening Part 3 & Part 4 note completion'
+        },
+        {
+          id: 'yt-10ms-munzereen-speaking',
+          videoId: 'ZOssSygjd7E',
+          channelName: '10 Minute School',
+          channelUrl: 'https://www.youtube.com/@10msmain',
+          title: 'IELTS Speaking Test for Band 8 | Feedback by Munzereen Shahid',
+          officialUrl: 'https://www.youtube.com/watch?v=ZOssSygjd7E',
+          skill: 'speaking',
+          lang: 'bn',
+          difficulty: 'Intermediate',
+          suitability: 'Academic & General Training',
+          type: 'Mock Interview (12m 35s)',
+          freeStatus: '100% Free Video',
+          verifiedDate: '2026-10-26',
+          score: 88,
+          rubric: { accuracy: 22, coverage: 17, clarity: 14, practice: 13, level: 9, structure: 8, relevance: 5 },
+          badges: ['Best for Speaking Practice', 'Best Bengali Explanation'],
+          whyBn: 'পার্ট ১, ২ এবং ৩-এর সম্পূর্ণ স্পিকিং মক টেস্ট এবং শেষে বাংলায় ব্যাকরণগত ভুল ("an advice" এর বদলে "a piece of advice") ও সময় ব্যবস্থাপনার বিস্তারিত ফিডব্যাক।',
+          whyEn: 'Full simulated Speaking test (Parts 1, 2, 3) with a Bangladeshi candidate followed by detailed Bengali error correction.',
+          taught: 'Part 1 interview, Part 2 Cue Card timing, Part 3 discussion, uncountable noun error correction',
+          notTaught: 'IPA phonetic chart drills'
+        },
+        {
+          id: 'yt-dadar-ischool-tense-bangla',
+          videoId: '2zo0dp0_xUc',
+          channelName: 'Dadar i School',
+          channelUrl: 'https://www.youtube.com/@DadariSchool',
+          title: 'আর ভুলবে না টেন্স। Tense Basic Class for Bangla Medium Students',
+          officialUrl: 'https://www.youtube.com/watch?v=2zo0dp0_xUc',
+          skill: 'grammar',
+          lang: 'bn',
+          difficulty: 'Beginner',
+          suitability: 'Spoken English & IELTS Foundation',
+          type: 'Foundation Class (47m 26s)',
+          freeStatus: '100% Free Public Resource',
+          verifiedDate: '2026-10-26',
+          score: 90,
+          rubric: { accuracy: 22, coverage: 17, clarity: 15, practice: 13, level: 10, structure: 9, relevance: 4 },
+          badges: ['Best for Beginners', 'Best Bengali Explanation'],
+          whyBn: 'বাংলা মিডিয়ামের শিক্ষার্থীদের জন্য ইংরেজি ১২টি Tense ও ক্রিয়ার রূপ চেনার অত্যন্ত সহজ ও কার্যকর ৪৭ মিনিটের বেসিক ক্লাস।',
+          whyEn: 'Accessible 47-minute foundational grammar class in Bengali designed for Bengali-medium learners.',
+          taught: '12 English tenses compared with Bengali verb endings, sentence formation',
+          notTaught: 'Advanced C2 academic inversions'
+        },
+        {
+          id: 'yt-banglay-ielts-writing-intro',
+          videoId: 'rNfcPgZYQuw',
+          channelName: 'Banglay IELTS',
+          channelUrl: 'https://www.youtube.com/@banglayielts',
+          title: 'Writing Task 2 Introduction Sentence || Plan Before You Start to Write',
+          officialUrl: 'https://www.youtube.com/watch?v=rNfcPgZYQuw',
+          skill: 'spoken-english',
+          lang: 'bn',
+          difficulty: 'Beginner',
+          suitability: 'Writing & Idea Expression',
+          type: 'Video (12m 11s)',
+          freeStatus: '100% Free Video',
+          verifiedDate: '2026-10-26',
+          score: 85,
+          rubric: { accuracy: 21, coverage: 15, clarity: 14, practice: 13, level: 10, structure: 8, relevance: 4 },
+          badges: ['Best Bengali Explanation'],
+          whyBn: 'ইংরেজিতে লেখার বা কথা বলার আগে ৫ মিনিটে আইডিয়া প্ল্যানিং এবং প্যারাফ্রেজিং করার সহজ বাংলা গাইড।',
+          whyEn: 'Focused Bengali tutorial helping beginners plan ideas and paraphrase prompts clearly.',
+          taught: 'Pre-writing brainstorming in Bengali, prompt paraphrasing, thesis clarity',
+          notTaught: 'Full Task 1 bar chart comparisons'
+        }
+      ];
+
+      // ---------- 3. SPOKEN ENGLISH LESSONS DATA ----------
+      const SPOKEN_LESSONS = [
+        {
+          id: 'lesson-spoken-01',
+          level: 'Beginner',
+          titleEn: 'Greetings, Introductions & University Campus Conversations',
+          titleBn: 'শুভেচ্ছা বিনিময়, নিজের পরিচয় দেওয়া এবং ক্যাম্পাস সংলাপ',
+          dialogueEn: 'A: "Hi, I don\'t think we\'ve met yet. I\'m Tariq from the Economics department." — B: "Nice to meet you, Tariq! I\'m Nusrat. How are you finding the first semester?"',
+          explanationBn: 'কারও সাথে প্রথমবার পরিচিত হওয়ার সময় শুধু "What is your name?" না বলে "I don\'t think we\'ve met yet" বললে অনেক বেশি স্বাভাবিক ও মার্জিত শোনায়।',
+          tip: 'Pronunciation Tip: "Finding the first semester"-এ কণ্ঠস্বর সামান্য নিচে নামিয়ে বন্ধুভাবাপন্ন টোন বজায় রাখুন।'
+        },
+        {
+          id: 'lesson-spoken-02',
+          level: 'Intermediate',
+          titleEn: 'Polite Requests & Workplace Email / Meeting English',
+          titleBn: 'অফিস বা কর্মক্ষেত্রে ভদ্রভাবে অনুরোধ ও মতামত প্রকাশ',
+          dialogueEn: 'Instead of "Send me the report today", say: "Could you possibly share the updated draft by 4 PM so we can review the figures before tomorrow\'s meeting?"',
+          explanationBn: 'সরাসরি আদেশসূচক বাক্য ব্যবহার না করে "Could you possibly..." বা "Would you mind..." ব্যবহার করলে পেশাদার পরিবেশে আপনার ইংরেজি অনেক উন্নত শোনায়।',
+          tip: 'Bengali-to-English Drill: "আমি কি একটু কথা বলতে পারি?" → "Could I have a quick word with you?"'
+        },
+        {
+          id: 'lesson-spoken-03',
+          level: 'Advanced',
+          titleEn: 'Expressing Nuanced Opinions & Agreeing Partially',
+          titleBn: 'যুক্তিপূর্ণ মতামত দেওয়া এবং আংশিক একমত হওয়ার কৌশল (IELTS Part 3)',
+          dialogueEn: '"I see where you\'re coming from regarding tuition fees. Looking at the bigger picture, targeted scholarships might be more sustainable than a blanket waiver."',
+          explanationBn: 'সরাসরি "I disagree" না বলে প্রথমে অন্যের যুক্তির স্বীকৃতি দিন ("I see where you\'re coming from"), তারপর নিজের বিকল্প যুক্তি তুলে ধরুন।',
+          tip: 'Fluency Tip: কথা বলার সময় "umm/err" কমাতে ছোট বিরতি (Pause) নিন এবং লিংকিং ফ্রেজ ব্যবহার করুন।'
+        },
+        {
+          id: 'lesson-spoken-04',
+          level: 'Beginner',
+          titleEn: 'Airport, Immigration & Travel Situations',
+          titleBn: 'বিমানবন্দর, ইমিগ্রেশন এবং ভ্রমণের জরুরি ইংরেজি',
+          dialogueEn: 'Officer: "What is the purpose of your visit?" — Traveler: "I\'m here to pursue my Master\'s degree in Data Science at the University of Glasgow."',
+          explanationBn: 'ইমিগ্রেশন বা ভ্রমণের সময় সংক্ষিপ্ত, স্পষ্ট এবং আত্মবিশ্বাসী উত্তর দিন। আপনার বিশ্ববিদ্যালয় বা গন্তব্যের নাম স্পষ্টভাবে উচ্চারণ করুন।',
+          tip: 'Practice: নিজের পাসপোর্ট ও অফার লেটার হাতে নিয়ে এই সংলাপটি ৩ বার উচ্চস্বরে অনুশীলন করুন।'
+        }
+      ];
+
+      // ---------- 4. VOCABULARY FLASHCARDS DATA ----------
+      const VOCAB_ITEMS = [
+        {
+          id: 'vocab-1',
+          word: 'Mitigate',
+          pos: 'Verb',
+          meaningBn: 'প্রশমিত করা / তীব্রতা কমানো',
+          collocation: 'mitigate the adverse effects of climate change',
+          example: 'Governments must invest in green infrastructure to mitigate the effects of urban flooding.'
+        },
+        {
+          id: 'vocab-2',
+          word: 'Proliferation',
+          pos: 'Noun',
+          meaningBn: 'দ্রুত বিস্তার বা সংখ্যা বৃদ্ধি',
+          collocation: 'the rapid proliferation of digital devices',
+          example: 'The proliferation of short-form video platforms has shortened average attention spans.'
+        },
+        {
+          id: 'vocab-3',
+          word: 'Viable',
+          pos: 'Adjective',
+          meaningBn: 'বাস্তবসম্মত ও কার্যকর (টেকে এমন)',
+          collocation: 'an economically viable alternative',
+          example: 'Solar micro-grids offer a viable alternative for remote coastal villages in Bangladesh.'
+        },
+        {
+          id: 'vocab-4',
+          word: 'Exacerbate',
+          pos: 'Verb',
+          meaningBn: 'কোনো খারাপ পরিস্থিতিকে আরও প্রকট করা',
+          collocation: 'exacerbate existing socioeconomic disparities',
+          example: 'Unplanned road construction often exacerbates traffic congestion during monsoon months.'
+        },
+        {
+          id: 'vocab-5',
+          word: 'Diminish',
+          pos: 'Verb',
+          meaningBn: 'হ্রাস পাওয়া বা গুরুত্ব কমে যাওয়া',
+          collocation: 'the intensity of engagement diminishes',
+          example: 'Without regular revision, retention of newly learned academic vocabulary rapidly diminishes.'
+        },
+        {
+          id: 'vocab-6',
+          word: 'Pragmatic',
+          pos: 'Adjective',
+          meaningBn: 'বাস্তবমুখী ও ফলপ্রসূ',
+          collocation: 'adopt a pragmatic approach to policy',
+          example: 'City planners need a pragmatic approach to balancing heritage preservation with modern housing.'
+        }
+      ];
+
+      // ---------- 5. REUSABLE PRACTICE QUIZ BANK ----------
+      const PRACTICE_QUESTIONS = [
+        {
+          id: 'pq-1',
+          skill: 'reading',
+          badge: 'Reading • True / False / Not Given',
+          question: 'Passage Statement: "The majority of university graduates found it challenging to secure immediate employment." — Question Statement: "After finishing tertiary education, all graduates struggled to find work."',
+          options: ['TRUE', 'FALSE', 'NOT GIVEN'],
+          correctIndex: 1,
+          explanationBn: 'সঠিক উত্তর FALSE। প্যাসেজে বলা হয়েছে "the majority" (অধিকাংশ), কিন্তু প্রশ্নে বলা হয়েছে "all" (১০০% সবাই)। এই দুটি পরস্পর বিরোধী, তাই উত্তর FALSE (IELTS Liz মেথড)।'
+        },
+        {
+          id: 'pq-2',
+          skill: 'reading',
+          badge: 'Reading • True / False / Not Given',
+          question: 'Passage Statement: "The foundation raises funds to support rural schooling and daily nutritional needs." — Question Statement: "The foundation spends more money on schooling than on daily nutritional needs."',
+          options: ['TRUE', 'FALSE', 'NOT GIVEN'],
+          correctIndex: 2,
+          explanationBn: 'সঠিক উত্তর NOT GIVEN। প্যাসেজে শিক্ষা ও পুষ্টি উভয় খাতের কথা বলা হলেও কোনটিতে বেশি বা কম খরচ হয় তার কোনো তুলনা দেওয়া হয়নি।'
+        },
+        {
+          id: 'pq-3',
+          skill: 'writing',
+          badge: 'Writing Task 2 • Official Criteria',
+          question: 'According to official IDP/British Council guidance (verified in IELTS Advantage course), should you invent specific statistics like "According to a 2024 Oxford study, 94.6% of commuters..." in Task 2?',
+          options: [
+            'Yes, examiners award Band 9 for fabricated statistics',
+            'No, avoid fake statistics and use clear, realistic real-world examples instead',
+            'Only in the conclusion paragraph'
+          ],
+          correctIndex: 1,
+          explanationBn: 'সঠিক উত্তর ২। বানানো বা ভুয়া গবেষণা পরিসংখ্যান ব্যবহার না করে বাস্তবসম্মত ও প্রাসঙ্গিক উদাহরণ দেওয়া উচিত।'
+        },
+        {
+          id: 'pq-4',
+          skill: 'listening',
+          badge: 'Listening • Plural & Distractor Trap',
+          question: 'In the E2 IELTS Listening test, the receptionist says: "Our manager will leave the keys in our lockbox." If the question asks "Speak to the manager to arrange __________", what happens if you write singular "key"?',
+          options: [
+            'It is marked incorrect because the plural "keys" is required for grammatical & audio accuracy',
+            'Singular and plural never matter in IELTS Listening',
+            'You get half a mark'
+          ],
+          correctIndex: 0,
+          explanationBn: 'সঠিক উত্তর ১। লিসেনিং টেস্টে একবচন ও বহুবচন ("key" বনাম "keys") অত্যন্ত গুরুত্বপূর্ণ; ভুল লিখলে পুরো নম্বর কাটা যায়।'
+        },
+        {
+          id: 'pq-5',
+          skill: 'grammar',
+          badge: 'Speaking & Writing Grammar • Uncountable Nouns',
+          question: 'Which sentence is grammatically accurate for IELTS Speaking & Writing?',
+          options: [
+            'My mentor gave me an useful advice before the exam.',
+            'My mentor gave me a valuable piece of advice before the exam.',
+            'My mentor gave me many advices before the exam.'
+          ],
+          correctIndex: 1,
+          explanationBn: 'সঠিক উত্তর ২। "Advice" একটি Uncountable Noun, তাই এর আগে "an" বা শেষে "s" বসে না; "a piece of advice" বলতে হয়।'
+        }
+      ];
+
+      // Eligibility Denominators per Skill
+      const ELIGIBLE_LESSONS_PER_SKILL = {
+        'reading': 3,
+        'writing': 2,
+        'listening': 2,
+        'speaking': 2,
+        'spoken-english': 4,
+        'vocabulary': 1,
+        'grammar': 1
+      };
+
+      // ---------- 6. CENTRAL 3-MODE THEME & LANGUAGE ENGINE ----------
+      function applyTheme(mode) {
+        if (mode) {
+          state.theme = normalizeTheme(mode);
+        } else {
+          state.theme = normalizeTheme(state.theme);
+        }
+        document.documentElement.setAttribute('data-theme', state.theme);
+        saveState();
+
+        // Update active state on the 3 Theme Selector buttons
+        document.querySelectorAll('.theme-mode-btn').forEach(function (btn) {
+          const btnMode = btn.getAttribute('data-theme-mode');
+          const isActive = btnMode === state.theme;
+          btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+          if (isActive) {
+            btn.className = 'theme-mode-btn h-8 px-2.5 rounded-md text-[11px] font-bold flex items-center gap-1 transition btn-primary-theme shadow-sm';
+          } else {
+            btn.className = 'theme-mode-btn h-8 px-2.5 rounded-md text-[11px] font-semibold flex items-center gap-1 transition opacity-75 hover:opacity-100';
+          }
+        });
+      }
+
+      function applyLanguage() {
+        const isBn = state.lang === 'bn';
+        document.documentElement.lang = isBn ? 'bn' : 'en';
+        const heroTitle = document.getElementById('hero-title-i18n');
+        const heroDesc = document.getElementById('hero-desc-i18n');
+        const heroBadge = document.getElementById('hero-badge-i18n');
+
+        if (heroBadge) {
+          heroBadge.textContent = isBn ? 'সম্পূর্ণ বিনামূল্যে • বাংলা ও ইংরেজি গাইডলাইন' : '100% Free • Bilingual Bengali & English Guidance';
+        }
+        if (heroTitle) {
+          heroTitle.textContent = isBn
+            ? 'সবার জন্য বিনামূল্যে IELTS ও Spoken English প্রস্তুতি'
+            : 'Free IELTS & Spoken English Preparation for Everyone';
+        }
+        if (heroDesc) {
+          heroDesc.textContent = isBn
+            ? 'Reading, Writing, Listening, Speaking এবং Spoken English-এর পূর্ণাঙ্গ লেসন, যাচাইকৃত ফ্রি YouTube রিসোর্স, ২ থেকে ১২ মাসের ব্যক্তিগত স্টাডি প্ল্যানার এবং অগ্রগতি ট্র্যাকিং—সবকিছু এক প্ল্যাটফর্মে।'
+            : 'Complete lessons for Reading, Writing, Listening, Speaking, and Spoken English, verified free YouTube courses, a 2 to 12 month personal study planner, and progress tracking in one place.';
+        }
+      }
+
+      function switchView(viewName) {
+        state.currentView = viewName;
+        saveState();
+        document.querySelectorAll('.app-view').forEach(function (sec) {
+          sec.classList.add('hidden');
+        });
+        const target = document.getElementById('view-' + viewName);
+        if (target) target.classList.remove('hidden');
+
+        document.querySelectorAll('.nav-tab').forEach(function (btn) {
+          if (btn.getAttribute('data-nav') === viewName) {
+            btn.classList.add('btn-primary-theme');
+          } else {
+            btn.classList.remove('btn-primary-theme');
+          }
+        });
+
+        const drawer = document.getElementById('mobile-drawer');
+        if (drawer) drawer.classList.add('hidden');
+
+        if (viewName === 'dashboard') renderDashboard();
+        if (viewName === 'youtube') renderYouTubeCatalog();
+        if (viewName === 'planner') renderPlannerTasks();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      function switchSkillSubtab(skillName) {
+        state.currentSkillTab = skillName;
+        saveState();
+        document.querySelectorAll('.skill-panel').forEach(function (p) {
+          p.classList.add('hidden');
+        });
+        const activePanel = document.getElementById('skill-panel-' + skillName);
+        if (activePanel) activePanel.classList.remove('hidden');
+
+        document.querySelectorAll('.skill-subtab').forEach(function (btn) {
+          if (btn.getAttribute('data-skill-tab') === skillName) {
+            btn.className = 'skill-subtab h-9 px-4 rounded-xl text-xs font-bold btn-primary-theme';
+          } else {
+            btn.className = 'skill-subtab h-9 px-4 rounded-xl text-xs font-bold glass-card';
+          }
+        });
+      }
+
+      // ---------- 7. RENDER READING MINI QUIZ ----------
+      const READING_MINI_QUESTIONS = [
+        {
+          id: 'rmq-1',
+          q: '1. Miyawaki forests require continuous chemical fertilizers five years after planting. (True / False / Not Given)',
+          options: ['TRUE', 'FALSE', 'NOT GIVEN'],
+          ans: 1,
+          exp: 'FALSE — Paragraph B explicitly states that after 2–3 years, a Miyawaki forest becomes completely self-sustaining and requires NO chemical fertilizers.'
+        },
+        {
+          id: 'rmq-2',
+          q: '2. Akira Miyawaki personally designed more than 500 urban parks in South Asia. (True / False / Not Given)',
+          options: ['TRUE', 'FALSE', 'NOT GIVEN'],
+          ans: 2,
+          exp: 'NOT GIVEN — Paragraph A mentions urban planners in South Asia use his method, but does not state whether Miyawaki personally designed 500 parks there.'
+        },
+        {
+          id: 'rmq-3',
+          q: '3. Which heading best matches Paragraph C?',
+          options: [
+            'i. Financial and ecological limitations of micro-forests',
+            'ii. How to irrigate native saplings in winter',
+            'iii. The history of Japanese botanical universities'
+          ],
+          ans: 0,
+          exp: 'i — Paragraph C discusses higher upfront soil/sapling costs and warns they cannot replace large-scale ancient woodlands.'
+        }
+      ];
+
+      function renderReadingMiniQuiz() {
+        const box = document.getElementById('reading-mini-quiz');
+        if (!box) return;
+        box.innerHTML = READING_MINI_QUESTIONS.map(function (item) {
+          const opts = item.options.map(function (opt, oIdx) {
+            return '<label class="flex items-center gap-2 p-2 rounded-lg theme-surface cursor-pointer">' +
+              '<input type="radio" name="' + item.id + '" value="' + oIdx + '" class="accent-emerald-600" />' +
+              '<span>' + opt + '</span></label>';
+          }).join('');
+          return '<div class="p-3.5 rounded-xl theme-surface space-y-2">' +
+            '<p class="font-semibold">' + item.q + '</p>' +
+            '<div class="space-y-1">' + opts + '</div></div>';
+        }).join('');
+      }
+
+      // ---------- 8. RENDER SPOKEN ENGLISH & VOCABULARY ----------
+      function renderSpokenLessons(levelFilter) {
+        const grid = document.getElementById('spoken-lessons-grid');
+        if (!grid) return;
+        const filtered = (!levelFilter || levelFilter === 'all')
+          ? SPOKEN_LESSONS
+          : SPOKEN_LESSONS.filter(function (l) { return l.level === levelFilter; });
+
+        grid.innerHTML = filtered.map(function (item) {
+          const isDone = state.completedLessons.some(function (c) { return c.lessonId === item.id; });
+          return '<div class="glass-card rounded-2xl p-6 space-y-3 flex flex-col justify-between">' +
+            '<div class="space-y-2">' +
+              '<div class="flex items-center justify-between">' +
+                '<span class="px-2.5 py-1 rounded-full badge-theme text-xs font-bold">' + item.level + '</span>' +
+                '<span class="text-xs font-semibold ' + (isDone ? 'text-emerald-400' : 'text-muted-theme') + '">' + (isDone ? '✓ Completed' : 'Spoken English') + '</span>' +
+              '</div>' +
+              '<h3 class="text-lg font-bold">' + item.titleEn + '</h3>' +
+              '<p class="text-xs text-highlight-theme font-semibold">' + item.titleBn + '</p>' +
+              '<div class="p-3 rounded-xl theme-surface text-xs italic">' + item.dialogueEn + '</div>' +
+              '<p class="text-xs leading-relaxed"><strong>বাংলা ব্যাখ্যা:</strong> ' + item.explanationBn + '</p>' +
+              '<p class="text-[11px] text-emerald-400">' + item.tip + '</p>' +
+            '</div>' +
+            '<div class="pt-3 border-t border-current/10 flex justify-end">' +
+              '<button type="button" data-complete-lesson="' + item.id + '" data-lesson-skill="spoken-english" class="complete-lesson-btn h-9 px-4 rounded-xl btn-primary-theme text-xs font-bold">' +
+                (isDone ? '✓ Completed' : 'Mark Lesson Completed') +
+              '</button>' +
+            '</div>' +
+          '</div>';
+        }).join('');
+      }
+
+      function renderVocabFlashcards() {
+        const grid = document.getElementById('vocab-flashcards-grid');
+        if (!grid) return;
+        let known = 0, learning = 0, review = 0;
+
+        grid.innerHTML = VOCAB_ITEMS.map(function (item) {
+          const st = state.vocabStatus[item.id] || 'learning';
+          if (st === 'known') known++;
+          else if (st === 'review') review++;
+          else learning++;
+
+          return '<div class="glass-card rounded-2xl p-5 flex flex-col justify-between space-y-4">' +
+            '<div class="space-y-2">' +
+              '<div class="flex items-center justify-between">' +
+                '<span class="text-lg font-extrabold">' + item.word + '</span>' +
+                '<span class="text-[11px] px-2.5 py-0.5 rounded-full uppercase font-bold badge-theme">' + st + '</span>' +
+              '</div>' +
+              '<p class="text-xs font-bold text-emerald-400">বাংলা অর্থ: ' + item.meaningBn + ' (' + item.pos + ')</p>' +
+              '<p class="text-xs text-muted-theme"><strong>Collocation:</strong> ' + item.collocation + '</p>' +
+              '<p class="text-xs italic p-2.5 rounded-lg theme-surface">"' + item.example + '"</p>' +
+            '</div>' +
+            '<div class="grid grid-cols-3 gap-1.5 pt-2 border-t border-current/10 text-[11px] font-bold">' +
+              '<button type="button" data-vocab-id="' + item.id + '" data-vocab-status="known" class="vocab-status-btn py-1.5 rounded-lg ' + (st === 'known' ? 'btn-primary-theme' : 'theme-surface') + '">Known</button>' +
+              '<button type="button" data-vocab-id="' + item.id + '" data-vocab-status="learning" class="vocab-status-btn py-1.5 rounded-lg ' + (st === 'learning' ? 'btn-primary-theme' : 'theme-surface') + '">Learning</button>' +
+              '<button type="button" data-vocab-id="' + item.id + '" data-vocab-status="review" class="vocab-status-btn py-1.5 rounded-lg ' + (st === 'review' ? 'btn-primary-theme' : 'theme-surface') + '">Review</button>' +
+            '</div>' +
+          '</div>';
+        }).join('');
+
+        const kEl = document.getElementById('vocab-known-count');
+        const lEl = document.getElementById('vocab-learning-count');
+        const rEl = document.getElementById('vocab-review-count');
+        if (kEl) kEl.textContent = String(known);
+        if (lEl) lEl.textContent = String(learning);
+        if (rEl) rEl.textContent = String(review);
+
+        if (known >= 3) {
+          recordLessonCompletion('lesson-vocabulary-01', 'vocabulary', true);
+        }
+      }
+
+      // ---------- 9. RENDER VERIFIED YOUTUBE CATALOG ----------
+      function renderYouTubeCatalog() {
+        const container = document.getElementById('youtube-cards-container');
+        if (!container) return;
+
+        const q = (document.getElementById('yt-search-input')?.value || '').trim().toLowerCase();
+        const skillFilter = document.getElementById('yt-skill-select')?.value || 'all';
+        const langFilter = document.getElementById('yt-lang-select')?.value || 'all';
+        const statusFilter = document.getElementById('yt-filter-status')?.value || 'all';
+
+        const filtered = YOUTUBE_CATALOG.filter(function (item) {
+          if (skillFilter !== 'all' && item.skill !== skillFilter) return false;
+          if (langFilter !== 'all' && item.lang !== langFilter) return false;
+          if (statusFilter === 'saved' && !state.savedYouTubeIds.includes(item.id)) return false;
+          if (statusFilter === 'watched' && !state.watchedYouTubeIds.includes(item.id)) return false;
+          if (statusFilter === 'unwatched' && state.watchedYouTubeIds.includes(item.id)) return false;
+          if (q) {
+            const hay = (item.title + ' ' + item.channelName + ' ' + item.whyBn + ' ' + item.whyEn + ' ' + item.skill + ' ' + item.lang).toLowerCase();
+            if (!hay.includes(q)) return false;
+          }
+          return true;
+        });
+
+        if (filtered.length === 0) {
+          container.innerHTML = '<div class="lg:col-span-2 glass-card rounded-2xl p-8 text-center space-y-2">' +
+            '<p class="text-base font-bold">এই ফিল্টারে কোনো যাচাইকৃত YouTube রিসোর্স পাওয়া যায়নি (Not enough verified information in this filter).</p>' +
+            '<p class="text-xs text-muted-theme">অনুগ্রহ করে ফিল্টার রিসেট করুন অথবা অন্য স্কিল নির্বাচন করুন।</p></div>';
+          return;
+        }
+
+        container.innerHTML = filtered.map(function (item) {
+          const isSaved = state.savedYouTubeIds.includes(item.id);
+          const isWatched = state.watchedYouTubeIds.includes(item.id);
+          const badgesHtml = item.badges.map(function (b) {
+            return '<span class="px-2.5 py-0.5 rounded-full badge-theme text-[10px] font-extrabold">' + b + '</span>';
+          }).join('');
+
+          return '<article class="glass-card rounded-2xl p-6 flex flex-col justify-between space-y-4">' +
+            '<div class="space-y-3">' +
+              '<div class="flex flex-wrap items-center justify-between gap-2">' +
+                '<div class="flex items-center gap-2">' +
+                  '<span class="px-2.5 py-1 rounded-lg badge-theme text-xs font-bold uppercase">' + item.skill + '</span>' +
+                  '<span class="px-2.5 py-1 rounded-lg theme-surface text-xs font-semibold">' + (item.lang === 'bn' ? 'বাংলা (Bengali)' : 'English') + '</span>' +
+                  '<span class="text-xs text-muted-theme">' + item.difficulty + '</span>' +
+                '</div>' +
+                '<div class="px-3 py-1 rounded-xl btn-primary-theme font-extrabold text-xs">Score: ' + item.score + '/100</div>' +
+              '</div>' +
+              '<div class="flex flex-wrap gap-1.5">' + badgesHtml + '</div>' +
+              '<div>' +
+                '<h3 class="text-lg font-extrabold leading-snug">' + item.title + '</h3>' +
+                '<p class="text-xs text-muted-theme mt-0.5">Channel: <strong>' + item.channelName + '</strong> • ' + item.type + ' • ' + item.freeStatus + '</p>' +
+              '</div>' +
+              '<div class="p-3.5 rounded-xl theme-surface text-xs space-y-1.5">' +
+                '<p><strong class="text-highlight-theme">কেন সুপারিশ করা হয়েছে:</strong> ' + item.whyBn + '</p>' +
+                '<p><strong class="text-emerald-400">কী শেখানো হয়েছে:</strong> ' + item.taught + '</p>' +
+                '<p><strong class="text-rose-400">কী কভার করা হয়নি:</strong> ' + item.notTaught + '</p>' +
+              '</div>' +
+              '<div class="grid grid-cols-7 gap-1 text-center text-[10px] theme-surface p-2 rounded-xl">' +
+                '<div><div class="font-bold text-highlight-theme">' + item.rubric.accuracy + '/25</div><div>Accuracy</div></div>' +
+                '<div><div class="font-bold text-highlight-theme">' + item.rubric.coverage + '/20</div><div>Coverage</div></div>' +
+                '<div><div class="font-bold text-highlight-theme">' + item.rubric.clarity + '/15</div><div>Clarity</div></div>' +
+                '<div><div class="font-bold text-highlight-theme">' + item.rubric.practice + '/15</div><div>Practice</div></div>' +
+                '<div><div class="font-bold text-highlight-theme">' + item.rubric.level + '/10</div><div>Level</div></div>' +
+                '<div><div class="font-bold text-highlight-theme">' + item.rubric.structure + '/10</div><div>Structure</div></div>' +
+                '<div><div class="font-bold text-highlight-theme">' + item.rubric.relevance + '/5</div><div>Recent</div></div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="pt-3 border-t border-current/10 flex flex-wrap items-center justify-between gap-2 text-xs font-bold">' +
+              '<a href="' + item.officialUrl + '" target="_blank" rel="noopener noreferrer" class="h-9 px-4 inline-flex items-center rounded-xl btn-primary-theme">▶️ Open on YouTube ↗</a>' +
+              '<div class="flex items-center gap-2">' +
+                '<button type="button" data-yt-save="' + item.id + '" class="yt-save-btn h-9 px-3 rounded-xl ' + (isSaved ? 'btn-primary-theme' : 'theme-surface') + '">' +
+                  (isSaved ? '★ Saved in Plan' : '☆ Save to Plan') +
+                '</button>' +
+                '<button type="button" data-yt-watch="' + item.id + '" class="yt-watch-btn h-9 px-3 rounded-xl ' + (isWatched ? 'badge-theme' : 'theme-surface') + '">' +
+                  (isWatched ? '✓ Watched' : 'Mark Watched') +
+                '</button>' +
+              '</div>' +
+            '</div>' +
+          '</article>';
+        }).join('');
+      }
+
+      // ---------- 10. PRACTICE QUIZ ENGINE ----------
+      let activeQuizIds = PRACTICE_QUESTIONS.map(function (q) { return q.id; });
+
+      function renderPracticeQuiz() {
+        const container = document.getElementById('quiz-questions-container');
+        if (!container) return;
+        const subset = PRACTICE_QUESTIONS.filter(function (q) {
+          return activeQuizIds.includes(q.id);
+        });
+
+        container.innerHTML = subset.map(function (item, idx) {
+          const optsHtml = item.options.map(function (opt, oIdx) {
+            return '<label class="flex items-center gap-2.5 p-3 rounded-xl theme-surface cursor-pointer transition">' +
+              '<input type="radio" name="quiz-' + item.id + '" value="' + oIdx + '" class="accent-emerald-600" />' +
+              '<span class="text-xs md:text-sm">' + opt + '</span></label>';
+          }).join('');
+
+          return '<div class="glass-card rounded-2xl p-6 space-y-3">' +
+            '<div class="flex items-center justify-between text-xs">' +
+              '<span class="px-2.5 py-1 rounded-md badge-theme font-bold">' + item.badge + '</span>' +
+              '<span class="text-muted-theme">Question ' + (idx + 1) + ' of ' + subset.length + '</span>' +
+            '</div>' +
+            '<h3 class="text-sm md:text-base font-bold leading-relaxed">' + item.question + '</h3>' +
+            '<div class="space-y-2">' + optsHtml + '</div>' +
+            '<div id="quiz-exp-' + item.id + '" class="hidden p-3.5 rounded-xl theme-surface text-xs"></div>' +
+          '</div>';
+        }).join('');
+      }
+
+      // ---------- 11. DETERMINISTIC 2-12 MONTH STUDY PLANNER ----------
+      function buildDeterministicRoutine() {
+        const cfg = state.planConfig;
+        const months = Math.max(2, Math.min(12, parseInt(cfg.durationMonths, 10) || 3));
+        const dailyMins = Math.max(30, Math.min(180, parseInt(cfg.dailyMinutes, 10) || 60));
+        const weak = cfg.weakSkill || 'writing';
+        const studyDays = Array.isArray(cfg.studyDays) && cfg.studyDays.length > 0 ? cfg.studyDays : [0, 1, 2, 3, 4, 6];
+
+        const rotation = ['reading', 'writing', 'listening', 'speaking', 'vocabulary', 'grammar', 'spoken-english'];
+        const tasks = [];
+        const totalHorizonDays = months * 30;
+
+        for (let d = 1; d <= 14; d++) {
+          const weekday = (d - 1) % 7;
+          if (!studyDays.includes(weekday)) {
+            tasks.push({
+              id: 'routine-day-' + d + '-rest',
+              day: d,
+              skill: 'rest',
+              title: 'Day ' + d + ': Rest & Light Vocabulary Buffer Day (বিশ্রাম ও রিভিশন)',
+              minutes: 0,
+              completed: false,
+              ytLink: ''
+            });
+            continue;
+          }
+
+          const primarySkill = (d % 2 === 1) ? weak : rotation[d % rotation.length];
+          const secondarySkill = rotation[(d + 2) % rotation.length];
+          const m1 = Math.floor(dailyMins * 0.6);
+          const m2 = dailyMins - m1;
+
+          const matchedYt = YOUTUBE_CATALOG.find(function (y) { return y.skill === primarySkill; }) || YOUTUBE_CATALOG[0];
+
+          tasks.push({
+            id: 'routine-day-' + d + '-a',
+            day: d,
+            skill: primarySkill,
+            title: 'Day ' + d + ' (' + primarySkill.toUpperCase() + ' Focus): ' + matchedYt.title,
+            minutes: m1,
+            completed: false,
+            ytLink: matchedYt.officialUrl
+          });
+
+          tasks.push({
+            id: 'routine-day-' + d + '-b',
+            day: d,
+            skill: secondarySkill,
+            title: 'Day ' + d + ' (' + secondarySkill.toUpperCase() + ' Drill): Timed Practice & Mistake Review',
+            minutes: m2,
+            completed: false,
+            ytLink: ''
+          });
+        }
+
+        tasks.push({
+          id: 'routine-milestone-' + totalHorizonDays,
+          day: totalHorizonDays,
+          skill: 'mock-tests',
+          title: 'Day ' + totalHorizonDays + ' (' + months + '-Month Final Milestone): Full Timed Mock Test & Target Band ' + cfg.targetBand + ' Readiness Review',
+          minutes: dailyMins,
+          completed: false,
+          ytLink: 'https://www.youtube.com/watch?v=v3axTdVoYkY'
+        });
+
+        state.routineTasks = tasks;
+        saveState();
+      }
+
+      function renderPlannerTasks() {
+        if (!state.routineTasks || state.routineTasks.length === 0) {
+          buildDeterministicRoutine();
+        }
+        const listEl = document.getElementById('planner-tasks-list');
+        const metaEl = document.getElementById('routine-summary-meta');
+        const compEl = document.getElementById('routine-completed-count');
+        if (!listEl) return;
+
+        const cfg = state.planConfig;
+        if (metaEl) {
+          metaEl.textContent = cfg.durationMonths + ' Months (' + (cfg.durationMonths * 30) + ' Days) • Target Band ' + cfg.targetBand + ' • Max ' + cfg.dailyMinutes + ' mins/day • Weak Skill Focus: ' + cfg.weakSkill.toUpperCase();
+        }
+
+        const doneCount = state.routineTasks.filter(function (t) { return t.completed; }).length;
+        if (compEl) compEl.textContent = doneCount + ' / ' + state.routineTasks.length;
+
+        listEl.innerHTML = state.routineTasks.map(function (t) {
+          return '<div class="p-3.5 rounded-xl theme-surface flex flex-wrap items-center justify-between gap-3 text-xs">' +
+            '<label class="flex items-start gap-2.5 cursor-pointer flex-1">' +
+              '<input type="checkbox" data-task-toggle="' + t.id + '" ' + (t.completed ? 'checked' : '') + ' class="routine-check mt-0.5 accent-emerald-600" />' +
+              '<div>' +
+                '<div class="font-bold ' + (t.completed ? 'line-through text-emerald-400' : '') + '">' + t.title + '</div>' +
+                '<div class="text-[11px] text-muted-theme mt-0.5">Skill: <span class="uppercase text-highlight-theme font-semibold">' + t.skill + '</span> • Allocated: ' + t.minutes + ' mins</div>' +
+              '</div>' +
+            '</label>' +
+            '<div class="flex items-center gap-2">' +
+              (t.ytLink ? '<a href="' + t.ytLink + '" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded badge-theme font-bold">YouTube ↗</a>' : '') +
+              '<button type="button" data-task-delete="' + t.id + '" class="routine-del-btn px-2 py-1 rounded bg-rose-500/15 text-rose-400 hover:bg-rose-500/25">✕</button>' +
+            '</div>' +
+          '</div>';
+        }).join('');
+      }
+
+      // ---------- 12. STRICT PROGRESS DASHBOARD CALCULATIONS ----------
+      function recordLessonCompletion(lessonId, skill, silent) {
+        const exists = state.completedLessons.some(function (c) { return c.lessonId === lessonId; });
+        if (!exists) {
+          state.completedLessons.push({
+            lessonId: lessonId,
+            skill: skill,
+            dateISO: new Date().toISOString().slice(0, 10)
+          });
+          saveState();
+          if (!silent) {
+            showToast('✓ Lesson progress saved for ' + skill.toUpperCase() + '!');
+          }
+        } else if (!silent) {
+          showToast('Already marked completed in your profile.');
+        }
+      }
+
+      function renderDashboard() {
+        const totalEligibleAll = Object.values(ELIGIBLE_LESSONS_PER_SKILL).reduce(function (a, b) { return a + b; }, 0);
+        const totalCompletedAll = state.completedLessons.length;
+        const overallPct = Math.min(100, Math.round((totalCompletedAll / Math.max(1, totalEligibleAll)) * 100));
+
+        const totalAttemptedQ = state.practiceAttempts.reduce(function (s, a) { return s + a.totalQuestions; }, 0);
+        const totalCorrectQ = state.practiceAttempts.reduce(function (s, a) { return s + a.correctCount; }, 0);
+        const overallAccuracyStr = totalAttemptedQ === 0
+          ? (state.lang === 'bn' ? 'এখনো কোনো অনুশীলন করা হয়নি' : 'No attempts yet')
+          : Math.round((totalCorrectQ / totalAttemptedQ) * 100) + '%';
+
+        const seenSessionIds = new Set();
+        let totalStudyMins = 0;
+        state.studySessions.forEach(function (s) {
+          if (s.sessionId && !seenSessionIds.has(s.sessionId)) {
+            seenSessionIds.add(s.sessionId);
+            totalStudyMins += (s.durationMinutes || 0);
+          }
+        });
+
+        const activeDates = new Set();
+        state.completedLessons.forEach(function (c) { if (c.dateISO) activeDates.add(c.dateISO); });
+        state.practiceAttempts.forEach(function (a) { if (a.dateISO) activeDates.add(a.dateISO); });
+        state.studySessions.forEach(function (s) { if (s.dateISO) activeDates.add(s.dateISO); });
+
+        const kpiPct = document.getElementById('kpi-overall-pct');
+        const kpiLessons = document.getElementById('kpi-lessons-count');
+        const kpiAcc = document.getElementById('kpi-accuracy-text');
+        const kpiAccSub = document.getElementById('kpi-attempts-sub');
+        const kpiMins = document.getElementById('kpi-study-mins');
+        const kpiStreak = document.getElementById('kpi-streak-days');
+        const kpiBand = document.getElementById('kpi-target-band');
+
+        if (kpiPct) kpiPct.textContent = overallPct + '%';
+        if (kpiLessons) kpiLessons.textContent = totalCompletedAll + ' / ' + totalEligibleAll + ' Eligible Lessons';
+        if (kpiAcc) kpiAcc.textContent = overallAccuracyStr;
+        if (kpiAccSub) kpiAccSub.textContent = totalAttemptedQ === 0 ? '0 questions attempted' : (totalCorrectQ + ' / ' + totalAttemptedQ + ' correct answers');
+        if (kpiMins) kpiMins.textContent = totalStudyMins + ' mins';
+        if (kpiStreak) kpiStreak.textContent = activeDates.size + (activeDates.size === 1 ? ' Day' : ' Days');
+        if (kpiBand) kpiBand.textContent = state.planConfig.targetBand || '7.0';
+
+        const tbody = document.getElementById('dashboard-skill-rows');
+        if (tbody) {
+          const skills = Object.keys(ELIGIBLE_LESSONS_PER_SKILL);
+          tbody.innerHTML = skills.map(function (sk) {
+            const denom = ELIGIBLE_LESSONS_PER_SKILL[sk];
+            const done = state.completedLessons.filter(function (c) { return c.skill === sk; }).length;
+            const pct = Math.min(100, Math.round((done / Math.max(1, denom)) * 100));
+
+            const skAttempts = state.practiceAttempts.filter(function (a) { return a.skill === sk; });
+            const skTotalQ = skAttempts.reduce(function (s, a) { return s + a.totalQuestions; }, 0);
+            const skCorrQ = skAttempts.reduce(function (s, a) { return s + a.correctCount; }, 0);
+            const skAccDisplay = skTotalQ === 0 ? 'No attempts yet' : (Math.round((skCorrQ / skTotalQ) * 100) + '% (' + skCorrQ + '/' + skTotalQ + ')');
+
+            return '<tr>' +
+              '<td class="py-3 pr-4 font-bold uppercase">' + sk + '</td>' +
+              '<td class="py-3 px-4">' + done + ' / ' + denom + ' lessons</td>' +
+              '<td class="py-3 px-4">' +
+                '<div class="w-full max-w-[160px] theme-surface rounded-full h-2.5 overflow-hidden">' +
+                  '<div class="btn-primary-theme h-full" style="width:' + pct + '%"></div>' +
+                '</div>' +
+                '<span class="text-[11px] text-muted-theme">' + pct + '%</span>' +
+              '</td>' +
+              '<td class="py-3 pl-4 text-right font-semibold text-highlight-theme">' + skAccDisplay + '</td>' +
+            '</tr>';
+          }).join('');
+        }
+
+        const savedBox = document.getElementById('dashboard-saved-yt');
+        if (savedBox) {
+          const savedItems = YOUTUBE_CATALOG.filter(function (y) { return state.savedYouTubeIds.includes(y.id); });
+          if (savedItems.length === 0) {
+            savedBox.innerHTML = '<p class="text-muted-theme">No YouTube resources saved yet. Visit YouTube Resources to bookmark lessons.</p>';
+          } else {
+            savedBox.innerHTML = savedItems.map(function (item) {
+              const watched = state.watchedYouTubeIds.includes(item.id);
+              return '<div class="p-3 rounded-xl theme-surface flex items-center justify-between gap-2">' +
+                '<div>' +
+                  '<div class="font-bold">' + item.title + '</div>' +
+                  '<div class="text-[11px] text-muted-theme">' + item.channelName + ' • Score: ' + item.score + '/100</div>' +
+                '</div>' +
+                '<span class="px-2.5 py-1 rounded text-[11px] font-bold badge-theme">' +
+                  (watched ? '✓ Watched' : 'In Plan') +
+                '</span>' +
+              '</div>';
+            }).join('');
+          }
+        }
+
+        const remBox = document.getElementById('dashboard-reminders-box');
+        if (remBox) {
+          const pendingTasks = (state.routineTasks || []).filter(function (t) { return !t.completed && t.minutes > 0; }).slice(0, 3);
+          if (pendingTasks.length === 0) {
+            remBox.innerHTML = '<p class="text-emerald-400 font-semibold">🎉 All scheduled tasks in your current view are completed!</p>';
+          } else {
+            remBox.innerHTML = pendingTasks.map(function (t) {
+              return '<div class="p-3 rounded-xl theme-surface flex items-center justify-between gap-2">' +
+                '<span>⏰ <strong>Upcoming:</strong> ' + t.title + '</span>' +
+                '<span class="text-highlight-theme font-bold shrink-0">' + t.minutes + 'm</span>' +
+              '</div>';
+            }).join('');
+          }
+        }
+      }
+
+      // ---------- 13. RENDER FREE RESOURCE LIBRARY ----------
+      function renderFreeLibrary() {
+        const grid = document.getElementById('free-library-grid');
+        if (!grid) return;
+        const resources = [
+          {
+            title: 'Official IELTS Assessment Criteria (Writing & Speaking Band Descriptors)',
+            source: 'Official IELTS Partners (IDP / British Council / Cambridge)',
+            type: 'Official Public Rubric',
+            url: 'https://ielts.org/take-a-test/preparation-resources',
+            desc: 'পরীক্ষকগণ ঠিক কোন ৪টি মানদণ্ডে Writing এবং Speaking মূল্যায়ন করেন তার অফিসিয়াল পাবলিক গাইডলাইন।'
+          },
+          {
+            title: 'IELTS Advantage — Complete 6-Hour Writing Task 2 Course',
+            source: 'Verified Third-Party Free Resource (Chris Pell)',
+            type: 'Video Masterclass',
+            url: 'https://www.youtube.com/watch?v=wzdG66VK75c',
+            desc: '১০০-পয়েন্টের রুব্রিকে ৯৬ প্রাপ্ত। কোনো পেইড সাবস্ক্রিপশন ছাড়াই সম্পূর্ণ টাস্ক ২ রাইটিং প্রিপারেশন।'
+          },
+          {
+            title: 'BBC Learning English — 6 Minute English Vocabulary Archive',
+            source: 'BBC World Service Public Resource',
+            type: 'Audio & Transcripts',
+            url: 'https://www.youtube.com/watch?v=fcN0BXzK8bg',
+            desc: 'ব্রিটিশ উচ্চারণ, একাডেমিক ভোকাবুলারি এবং কনটেক্সচুয়াল গ্রামার শেখার জন্য সেরা ফ্রি অডিও সংকলন।'
+          }
+        ];
+
+        grid.innerHTML = resources.map(function (r) {
+          return '<div class="glass-card rounded-2xl p-6 flex flex-col justify-between space-y-4">' +
+            '<div class="space-y-2">' +
+              '<span class="px-2.5 py-1 rounded-full badge-theme text-xs font-bold">' + r.type + '</span>' +
+              '<h3 class="text-lg font-bold">' + r.title + '</h3>' +
+              '<p class="text-xs text-highlight-theme font-semibold">Source Attribution: ' + r.source + '</p>' +
+              '<p class="text-xs text-muted-theme leading-relaxed">' + r.desc + '</p>' +
+            '</div>' +
+            '<a href="' + r.url + '" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center h-10 px-4 rounded-xl btn-primary-theme font-extrabold text-xs">' +
+              'Open Verified Resource ↗' +
+            '</a>' +
+          '</div>';
+        }).join('');
+      }
+
+      // ---------- 14. WRITING DRAFTS & WORD COUNTER ----------
+      function updateWritingCounters() {
+        const editor = document.getElementById('writing-editor');
+        const wCountEl = document.getElementById('writing-word-count');
+        const cCountEl = document.getElementById('writing-char-count');
+        if (!editor) return;
+        const text = editor.value.trim();
+        const words = text ? text.split(/\s+/).length : 0;
+        if (wCountEl) wCountEl.textContent = String(words);
+        if (cCountEl) cCountEl.textContent = String(text.length);
+        state.writingDraftText = editor.value;
+        saveState();
+      }
+
+      function renderSavedWritingDrafts() {
+        const listEl = document.getElementById('saved-drafts-list');
+        const countEl = document.getElementById('saved-drafts-count');
+        if (!listEl) return;
+        const drafts = state.savedWritingDrafts || [];
+        if (countEl) countEl.textContent = String(drafts.length);
+        if (drafts.length === 0) {
+          listEl.innerHTML = '<p class="text-muted-theme">No saved drafts yet. Write above and click Save Draft.</p>';
+          return;
+        }
+        listEl.innerHTML = drafts.map(function (d) {
+          return '<div class="p-2.5 rounded-lg theme-surface space-y-1">' +
+            '<div class="flex justify-between text-[10px] text-highlight-theme font-bold"><span>' + d.task + '</span><span>' + d.words + ' words • ' + d.date + '</span></div>' +
+            '<p class="truncate text-muted-theme">' + d.snippet + '</p>' +
+          '</div>';
+        }).join('');
+      }
+
+      // ---------- 15. TIMERS & AUDIO / RECORDER ----------
+      let readingInterval = null;
+      let readingSeconds = 20 * 60;
+
+      let speakingInterval = null;
+      let speakingSeconds = 60;
+
+      let mediaRecorder = null;
+      let audioChunks = [];
+
+      function formatMMSS(totalSec) {
+        const m = String(Math.floor(totalSec / 60)).padStart(2, '0');
+        const s = String(totalSec % 60).padStart(2, '0');
+        return m + ':' + s;
+      }
+
+      // ---------- 16. WIRE EVENT LISTENERS ----------
+      function initEventListeners() {
+        document.getElementById('brand-home-btn')?.addEventListener('click', function () {
+          switchView('home');
+        });
+
+        document.getElementById('mobile-menu-btn')?.addEventListener('click', function () {
+          const d = document.getElementById('mobile-drawer');
+          if (d) d.classList.toggle('hidden');
+        });
+
+        // Language toggle
+        document.getElementById('lang-toggle-btn')?.addEventListener('click', function () {
+          state.lang = state.lang === 'bn' ? 'en' : 'bn';
+          saveState();
+          applyLanguage();
+          renderDashboard();
+          showToast(state.lang === 'bn' ? 'ভাষা: বাংলা সক্রিয় করা হয়েছে' : 'Language switched to English');
+        });
+
+        // Delegated click handler for Theme Selector (Default / White / Black), Navigation, and Interactive Controls
+        document.body.addEventListener('click', function (e) {
+          const themeBtn = e.target.closest('[data-theme-mode]');
+          if (themeBtn) {
+            const selectedMode = themeBtn.getAttribute('data-theme-mode');
+            applyTheme(selectedMode);
+            const labelMap = {
+              'default': '🌿 Default Mode (Forest & Leaf) Activated',
+              'white': '☀️ White Mode (Light Theme) Activated',
+              'black': '🌙 Black Mode (Dark Theme) Activated'
+            };
+            showToast(labelMap[selectedMode] || 'Theme updated');
+            return;
+          }
+
+          const navBtn = e.target.closest('[data-nav]');
+          if (navBtn) {
+            switchView(navBtn.getAttribute('data-nav'));
+            return;
+          }
+
+          const openSkillBtn = e.target.closest('[data-open-skill]');
+          if (openSkillBtn) {
+            const sk = openSkillBtn.getAttribute('data-open-skill');
+            switchView('learn');
+            switchSkillSubtab(sk);
+            return;
+          }
+
+          const skillTabBtn = e.target.closest('[data-skill-tab]');
+          if (skillTabBtn) {
+            switchSkillSubtab(skillTabBtn.getAttribute('data-skill-tab'));
+            return;
+          }
+
+          const ytFilterBtn = e.target.closest('[data-yt-filter]');
+          if (ytFilterBtn) {
+            const sk = ytFilterBtn.getAttribute('data-yt-filter');
+            const sel = document.getElementById('yt-skill-select');
+            if (sel) sel.value = sk;
+            switchView('youtube');
+            renderYouTubeCatalog();
+            return;
+          }
+
+          const completeBtn = e.target.closest('[data-complete-lesson]');
+          if (completeBtn) {
+            const lid = completeBtn.getAttribute('data-complete-lesson');
+            const lsk = completeBtn.getAttribute('data-lesson-skill') || 'reading';
+            recordLessonCompletion(lid, lsk, false);
+            renderSpokenLessons();
+            return;
+          }
+
+          const spokenFilterBtn = e.target.closest('[data-spoken-level]');
+          if (spokenFilterBtn) {
+            renderSpokenLessons(spokenFilterBtn.getAttribute('data-spoken-level'));
+            return;
+          }
+
+          const vocabBtn = e.target.closest('[data-vocab-id]');
+          if (vocabBtn) {
+            const vid = vocabBtn.getAttribute('data-vocab-id');
+            const vst = vocabBtn.getAttribute('data-vocab-status');
+            state.vocabStatus[vid] = vst;
+            saveState();
+            renderVocabFlashcards();
+            showToast('Flashcard updated to: ' + vst.toUpperCase());
+            return;
+          }
+
+          const ytQuickBtn = e.target.closest('[data-yt-quick]');
+          if (ytQuickBtn) {
+            const qVal = ytQuickBtn.getAttribute('data-yt-quick');
+            const sInput = document.getElementById('yt-search-input');
+            const skSel = document.getElementById('yt-skill-select');
+            const lgSel = document.getElementById('yt-lang-select');
+            const stSel = document.getElementById('yt-filter-status');
+            if (sInput) sInput.value = qVal;
+            if (!qVal) {
+              if (skSel) skSel.value = 'all';
+              if (lgSel) lgSel.value = 'all';
+              if (stSel) stSel.value = 'all';
+            }
+            renderYouTubeCatalog();
+            return;
+          }
+
+          const ytSaveBtn = e.target.closest('[data-yt-save]');
+          if (ytSaveBtn) {
+            const yid = ytSaveBtn.getAttribute('data-yt-save');
+            const idx = state.savedYouTubeIds.indexOf(yid);
+            if (idx === -1) {
+              state.savedYouTubeIds.push(yid);
+              showToast('★ Resource saved to your Learning Plan!');
+            } else {
+              state.savedYouTubeIds.splice(idx, 1);
+              showToast('Removed from saved resources.');
+            }
+            saveState();
+            renderYouTubeCatalog();
+            return;
+          }
+
+          const ytWatchBtn = e.target.closest('[data-yt-watch]');
+          if (ytWatchBtn) {
+            const yid = ytWatchBtn.getAttribute('data-yt-watch');
+            const idx = state.watchedYouTubeIds.indexOf(yid);
+            if (idx === -1) {
+              state.watchedYouTubeIds.push(yid);
+              showToast('✓ Marked video as watched!');
+            } else {
+              state.watchedYouTubeIds.splice(idx, 1);
+            }
+            saveState();
+            renderYouTubeCatalog();
+            return;
+          }
+
+          const taskToggle = e.target.closest('[data-task-toggle]');
+          if (taskToggle) {
+            const tid = taskToggle.getAttribute('data-task-toggle');
+            const found = state.routineTasks.find(function (t) { return t.id === tid; });
+            if (found) {
+              found.completed = taskToggle.checked;
+              saveState();
+              renderPlannerTasks();
+            }
+            return;
+          }
+
+          const taskDel = e.target.closest('[data-task-delete]');
+          if (taskDel) {
+            const tid = taskDel.getAttribute('data-task-delete');
+            state.routineTasks = state.routineTasks.filter(function (t) { return t.id !== tid; });
+            saveState();
+            renderPlannerTasks();
+            showToast('Task removed from routine.');
+            return;
+          }
+        });
+
+        // Reading timer
+        document.getElementById('reading-timer-btn')?.addEventListener('click', function () {
+          const disp = document.getElementById('reading-timer-display');
+          const btn = document.getElementById('reading-timer-btn');
+          if (readingInterval) {
+            clearInterval(readingInterval);
+            readingInterval = null;
+            if (btn) btn.textContent = 'Resume Timer';
+          } else {
+            if (btn) btn.textContent = 'Pause Timer';
+            readingInterval = setInterval(function () {
+              if (readingSeconds > 0) {
+                readingSeconds--;
+                if (disp) disp.textContent = formatMMSS(readingSeconds);
+              } else {
+                clearInterval(readingInterval);
+                readingInterval = null;
+                showToast('⏰ Reading passage timer finished!');
+              }
+            }, 1000);
+          }
+        });
+
+        // Submit Reading Mini Quiz
+        document.getElementById('submit-reading-mini-btn')?.addEventListener('click', function () {
+          let correct = 0;
+          const details = [];
+          READING_MINI_QUESTIONS.forEach(function (q) {
+            const checked = document.querySelector('input[name="' + q.id + '"]:checked');
+            const chosen = checked ? parseInt(checked.value, 10) : -1;
+            const isRight = chosen === q.ans;
+            if (isRight) correct++;
+            details.push('<p class="' + (isRight ? 'text-emerald-400' : 'text-rose-400') + '"><strong>' + (isRight ? '✓ Correct: ' : '✗ Review: ') + '</strong>' + q.exp + '</p>');
+          });
+
+          const fb = document.getElementById('reading-mini-feedback');
+          if (fb) {
+            fb.classList.remove('hidden');
+            fb.innerHTML = '<div class="font-bold text-highlight-theme">Score: ' + correct + ' / ' + READING_MINI_QUESTIONS.length + '</div>' + details.join('');
+          }
+
+          state.practiceAttempts.push({
+            attemptId: 'reading-mini-' + Date.now(),
+            skill: 'reading',
+            correctCount: correct,
+            totalQuestions: READING_MINI_QUESTIONS.length,
+            dateISO: new Date().toISOString().slice(0, 10)
+          });
+          saveState();
+          showToast('Reading practice attempt recorded in Dashboard!');
+        });
+
+        // Writing Task Select & Editor
+        document.getElementById('writing-task-select')?.addEventListener('change', function (e) {
+          const val = e.target.value;
+          const pText = document.getElementById('writing-prompt-text');
+          const minT = document.getElementById('writing-min-target');
+          if (val === 'task1-academic') {
+            if (pText) pText.textContent = 'The bar chart compares the percentage of electricity generated from renewable sources across four countries between 2010 and 2025. Summarize the information by selecting and reporting the main features, and make comparisons where relevant. (Minimum 150 words)';
+            if (minT) minT.textContent = '/ 150 min';
+          } else if (val === 'task1-gt') {
+            if (pText) pText.textContent = 'You are renting an apartment and the heating system has stopped working properly for a week. Write a letter to your landlord explaining the problem, how it affects your study routine, and what action you would like them to take. (Minimum 150 words)';
+            if (minT) minT.textContent = '/ 150 min';
+          } else {
+            if (pText) pText.textContent = 'Some people believe that allowing employees to work from home permanently benefits both companies and society as a whole. To what extent do you agree or disagree? (Minimum 250 words)';
+            if (minT) minT.textContent = '/ 250 min';
+          }
+        });
+
+        document.getElementById('writing-editor')?.addEventListener('input', updateWritingCounters);
+
+        document.getElementById('save-writing-draft-btn')?.addEventListener('click', function () {
+          const editor = document.getElementById('writing-editor');
+          const taskSel = document.getElementById('writing-task-select');
+          const text = (editor?.value || '').trim();
+          if (!text) {
+            showToast('Please write a few sentences before saving a draft.');
+            return;
+          }
+          const words = text.split(/\s+/).length;
+          state.savedWritingDrafts.unshift({
+            task: taskSel?.value || 'Task 2',
+            words: words,
+            date: new Date().toISOString().slice(0, 10),
+            snippet: text.slice(0, 90)
+          });
+          saveState();
+          renderSavedWritingDrafts();
+          showToast('💾 Writing draft saved (' + words + ' words)!');
+        });
+
+        document.getElementById('toggle-model-answer-btn')?.addEventListener('click', function () {
+          document.getElementById('writing-model-box')?.classList.toggle('hidden');
+        });
+
+        // Listening Web Speech TTS & Check
+        document.getElementById('play-listening-tts-btn')?.addEventListener('click', function () {
+          const statusEl = document.getElementById('listening-audio-status');
+          if (!('speechSynthesis' in window)) {
+            if (statusEl) statusEl.textContent = 'Speech synthesis is not supported in this browser; please use the full transcript below.';
+            return;
+          }
+          window.speechSynthesis.cancel();
+          const utter = new SpeechSynthesisUtterance(
+            "Good afternoon, Evenings Venue Hire. No, Green Road is our old address. We moved to the city center at Level 16B, Gemborough Road, spelled G E M B O R O U G H, right beside the cinema, two blocks from the library. Our Governor Room holds a maximum of 35 people, while the State Room costs 415 dollars and includes a private kitchen."
+          );
+          utter.lang = document.getElementById('listening-accent-select')?.value || 'en-GB';
+          utter.rate = 0.95;
+          utter.onstart = function () {
+            if (statusEl) statusEl.textContent = '🔊 Playing simulated IELTS Listening audio...';
+          };
+          utter.onend = function () {
+            if (statusEl) statusEl.textContent = '✓ Audio playback finished.';
+          };
+          window.speechSynthesis.speak(utter);
+        });
+
+        document.getElementById('stop-listening-tts-btn')?.addEventListener('click', function () {
+          if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+          const statusEl = document.getElementById('listening-audio-status');
+          if (statusEl) statusEl.textContent = '⏹️ Audio stopped.';
+        });
+
+        document.getElementById('toggle-transcript-btn')?.addEventListener('click', function () {
+          document.getElementById('listening-transcript-box')?.classList.toggle('hidden');
+        });
+
+        document.getElementById('check-listening-btn')?.addEventListener('click', function () {
+          const a1 = (document.getElementById('listen-q1')?.value || '').trim().toLowerCase();
+          const a2 = (document.getElementById('listen-q2')?.value || '').trim().toLowerCase();
+          const a3 = (document.getElementById('listen-q3')?.value || '').trim().toLowerCase();
+
+          let score = 0;
+          if (a1 === 'gemborough') score++;
+          if (a2 === 'cinema') score++;
+          if (a3 === '35' || a3 === '35 people') score++;
+
+          const fb = document.getElementById('listening-feedback-box');
+          if (fb) {
+            fb.classList.remove('hidden');
+            fb.innerHTML =
+              '<p class="font-bold text-highlight-theme">Listening Drill Score: ' + score + ' / 3</p>' +
+              '<p>1. <strong>Gemborough</strong> (Distractor: "Green Road" was the old building).</p>' +
+              '<p>2. <strong>cinema</strong> (Distractor: "library" is two blocks away, not immediately beside).</p>' +
+              '<p>3. <strong>35</strong> (Distractor: 15 and 25 were mentioned, but maximum capacity is 35).</p>';
+          }
+
+          state.practiceAttempts.push({
+            attemptId: 'listening-drill-' + Date.now(),
+            skill: 'listening',
+            correctCount: score,
+            totalQuestions: 3,
+            dateISO: new Date().toISOString().slice(0, 10)
+          });
+          saveState();
+          showToast('Listening attempt saved to Dashboard!');
+        });
+
+        // Speaking Cue Cards & Timers
+        document.getElementById('cue-card-select')?.addEventListener('change', function (e) {
+          const val = e.target.value;
+          const titleEl = document.getElementById('cue-card-title');
+          const bulletsEl = document.getElementById('cue-card-bullets');
+          if (val === 'skill') {
+            if (titleEl) titleEl.textContent = 'Describe a practical skill you learned outside school or university.';
+            if (bulletsEl) bulletsEl.innerHTML = '<li>what the skill is</li><li>who taught you this skill</li><li>how long it took to learn</li><li>and explain how this skill helps you in daily life.</li>';
+          } else if (val === 'place') {
+            if (titleEl) titleEl.textContent = 'Describe a quiet place in your city where you like to read or study.';
+            if (bulletsEl) bulletsEl.innerHTML = '<li>where this place is located</li><li>how you first discovered it</li><li>how often you go there</li><li>and explain why you find it peaceful for concentration.</li>';
+          } else {
+            if (titleEl) titleEl.textContent = 'Describe a piece of good advice that you recently received.';
+            if (bulletsEl) bulletsEl.innerHTML = '<li>when and where you received this advice</li><li>who gave you the advice</li><li>what the advice actually was</li><li>and explain why you felt this advice was helpful.</li>';
+          }
+        });
+
+        function startSpeakingCountdown(seconds) {
+          if (speakingInterval) clearInterval(speakingInterval);
+          speakingSeconds = seconds;
+          const disp = document.getElementById('speaking-timer-display');
+          if (disp) disp.textContent = formatMMSS(speakingSeconds);
+          speakingInterval = setInterval(function () {
+            if (speakingSeconds > 0) {
+              speakingSeconds--;
+              if (disp) disp.textContent = formatMMSS(speakingSeconds);
+            } else {
+              clearInterval(speakingInterval);
+              speakingInterval = null;
+              showToast('⏰ Speaking timer completed!');
+            }
+          }, 1000);
+        }
+
+        document.getElementById('start-prep-timer-btn')?.addEventListener('click', function () {
+          startSpeakingCountdown(60);
+        });
+        document.getElementById('start-talk-timer-btn')?.addEventListener('click', function () {
+          startSpeakingCountdown(120);
+        });
+        document.getElementById('reset-speak-timer-btn')?.addEventListener('click', function () {
+          if (speakingInterval) clearInterval(speakingInterval);
+          speakingInterval = null;
+          const disp = document.getElementById('speaking-timer-display');
+          if (disp) disp.textContent = '01:00';
+        });
+
+        // Local Voice Recorder
+        document.getElementById('start-record-btn')?.addEventListener('click', async function () {
+          const stEl = document.getElementById('recorder-status');
+          if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            if (stEl) stEl.textContent = 'Microphone API unavailable in this iframe.';
+            showToast('Microphone recording is restricted by browser sandbox.');
+            return;
+          }
+          try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            audioChunks = [];
+            mediaRecorder = new MediaRecorder(stream);
+            mediaRecorder.ondataavailable = function (ev) {
+              if (ev.data.size > 0) audioChunks.push(ev.data);
+            };
+            mediaRecorder.onstop = function () {
+              const blob = new Blob(audioChunks, { type: 'audio/webm' });
+              const audioUrl = URL.createObjectURL(blob);
+              const player = document.getElementById('speaking-audio-playback');
+              if (player) {
+                player.src = audioUrl;
+                player.classList.remove('hidden');
+              }
+              stream.getTracks().forEach(function (tr) { tr.stop(); });
+            };
+            mediaRecorder.start();
+            if (stEl) stEl.textContent = '🔴 Recording locally...';
+          } catch (err) {
+            if (stEl) stEl.textContent = 'Mic permission denied or unavailable.';
+          }
+        });
+
+        document.getElementById('stop-record-btn')?.addEventListener('click', function () {
+          const stEl = document.getElementById('recorder-status');
+          if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+            mediaRecorder.stop();
+            if (stEl) stEl.textContent = '✓ Saved in local browser memory';
+          }
+        });
+
+        document.getElementById('delete-record-btn')?.addEventListener('click', function () {
+          const player = document.getElementById('speaking-audio-playback');
+          const stEl = document.getElementById('recorder-status');
+          if (player) {
+            player.pause();
+            player.removeAttribute('src');
+            player.classList.add('hidden');
+          }
+          if (stEl) stEl.textContent = 'Recording deleted.';
+        });
+
+        // YouTube Search & Filter Listeners
+        ['yt-search-input', 'yt-skill-select', 'yt-lang-select', 'yt-filter-status'].forEach(function (id) {
+          const el = document.getElementById(id);
+          if (el) {
+            el.addEventListener('input', renderYouTubeCatalog);
+            el.addEventListener('change', renderYouTubeCatalog);
+          }
+        });
+
+        // Practice Quiz Engine Submit & Retry Wrong
+        document.getElementById('submit-quiz-engine-btn')?.addEventListener('click', function () {
+          const subset = PRACTICE_QUESTIONS.filter(function (q) { return activeQuizIds.includes(q.id); });
+          let correct = 0;
+          const wrongIds = [];
+
+          subset.forEach(function (q) {
+            const sel = document.querySelector('input[name="quiz-' + q.id + '"]:checked');
+            const val = sel ? parseInt(sel.value, 10) : -1;
+            const expEl = document.getElementById('quiz-exp-' + q.id);
+            if (val === q.correctIndex) {
+              correct++;
+              if (expEl) {
+                expEl.classList.remove('hidden');
+                expEl.innerHTML = '<span class="text-emerald-400 font-bold">✓ Correct!</span> ' + q.explanationBn;
+              }
+            } else {
+              wrongIds.push(q.id);
+              if (expEl) {
+                expEl.classList.remove('hidden');
+                expEl.innerHTML = '<span class="text-rose-400 font-bold">✗ Incorrect.</span> ' + q.explanationBn;
+              }
+            }
+
+            state.practiceAttempts.push({
+              attemptId: 'quiz-' + q.id + '-' + Date.now(),
+              skill: q.skill,
+              correctCount: val === q.correctIndex ? 1 : 0,
+              totalQuestions: 1,
+              dateISO: new Date().toISOString().slice(0, 10)
+            });
+          });
+
+          saveState();
+          const banner = document.getElementById('quiz-score-banner');
+          if (banner) {
+            banner.classList.remove('hidden');
+            banner.textContent = 'Practice Result: ' + correct + ' / ' + subset.length + ' (' + Math.round((correct / Math.max(1, subset.length)) * 100) + '% Accuracy)';
+          }
+
+          const retryBtn = document.getElementById('retry-wrong-quiz-btn');
+          if (retryBtn) {
+            if (wrongIds.length > 0) {
+              retryBtn.classList.remove('hidden');
+              retryBtn.onclick = function () {
+                activeQuizIds = wrongIds;
+                renderPracticeQuiz();
+                retryBtn.classList.add('hidden');
+                showToast('Filtered to ' + wrongIds.length + ' wrong question(s) for retry!');
+              };
+            } else {
+              retryBtn.classList.add('hidden');
+            }
+          }
+          showToast('Practice score saved to your Progress Dashboard!');
+        });
+
+        document.getElementById('reset-full-quiz-btn')?.addEventListener('click', function () {
+          activeQuizIds = PRACTICE_QUESTIONS.map(function (q) { return q.id; });
+          renderPracticeQuiz();
+          document.getElementById('quiz-score-banner')?.classList.add('hidden');
+          document.getElementById('retry-wrong-quiz-btn')?.classList.add('hidden');
+        });
+
+        // Study Planner Form Submission
+        document.getElementById('study-planner-form')?.addEventListener('submit', function (e) {
+          e.preventDefault();
+          const daysChecked = [];
+          document.querySelectorAll('#weekday-checkboxes input[type="checkbox"]:checked').forEach(function (cb) {
+            daysChecked.push(parseInt(cb.value, 10));
+          });
+
+          state.planConfig = {
+            durationMonths: parseInt(document.getElementById('plan-duration')?.value || '3', 10),
+            targetBand: document.getElementById('plan-target-band')?.value || '7.0',
+            level: document.getElementById('plan-level')?.value || 'Beginner',
+            dailyMinutes: parseInt(document.getElementById('plan-daily-mins')?.value || '60', 10),
+            module: document.getElementById('plan-module')?.value || 'Academic',
+            weakSkill: document.getElementById('plan-weak-skill')?.value || 'writing',
+            studyDays: daysChecked.length > 0 ? daysChecked : [0, 1, 2, 3, 4, 6]
+          };
+
+          buildDeterministicRoutine();
+          renderPlannerTasks();
+          showToast('⚡ Deterministic ' + state.planConfig.durationMonths + '-Month Study Plan Generated!');
+        });
+
+        // Custom Task Add & Reschedule
+        document.getElementById('add-custom-task-btn')?.addEventListener('click', function () {
+          const titleInput = document.getElementById('custom-task-title');
+          const minsInput = document.getElementById('custom-task-mins');
+          const skillInput = document.getElementById('custom-task-skill');
+          const tVal = (titleInput?.value || '').trim();
+          if (!tVal) {
+            showToast('Please enter a custom task title.');
+            return;
+          }
+          state.routineTasks.unshift({
+            id: 'custom-' + Date.now(),
+            day: 1,
+            skill: skillInput?.value || 'reading',
+            title: 'Custom: ' + tVal,
+            minutes: parseInt(minsInput?.value || '30', 10),
+            completed: false,
+            ytLink: ''
+          });
+          if (titleInput) titleInput.value = '';
+          saveState();
+          renderPlannerTasks();
+          showToast('✓ Custom task added to routine!');
+        });
+
+        document.getElementById('reschedule-unfinished-btn')?.addEventListener('click', function () {
+          let moved = 0;
+          state.routineTasks.forEach(function (t) {
+            if (!t.completed && t.minutes > 0) {
+              t.day = (t.day || 1) + 1;
+              moved++;
+            }
+          });
+          saveState();
+          renderPlannerTasks();
+          showToast('↪ Rescheduled ' + moved + ' unfinished tasks to next day.');
+        });
+
+        // Dashboard Log Study Session (Deduplicated by Hourly Session Key)
+        document.getElementById('log-session-btn')?.addEventListener('click', function () {
+          const hourBucket = new Date().toISOString().slice(0, 13);
+          const sessionId = 'session-' + hourBucket;
+          const alreadyExists = state.studySessions.some(function (s) { return s.sessionId === sessionId; });
+          if (alreadyExists) {
+            showToast('Duplicate guard: This study session is already logged for the current hour.');
+            return;
+          }
+          state.studySessions.push({
+            sessionId: sessionId,
+            skill: state.planConfig.weakSkill || 'writing',
+            durationMinutes: 25,
+            dateISO: new Date().toISOString().slice(0, 10)
+          });
+          saveState();
+          renderDashboard();
+          showToast('✓ Logged 25m study session to your dashboard!');
+        });
+
+        // Instant Create Account Flow (No Login / OAuth Required)
+        function updateAuthUI() {
+          const headerBtn = document.getElementById('header-login-btn');
+          const nameInput = document.getElementById('account-name-input');
+          const bandSelect = document.getElementById('account-band-select');
+          const modSelect = document.getElementById('account-module-select');
+          const badgeBox = document.getElementById('saved-account-badge');
+          const summaryEl = document.getElementById('saved-account-summary');
+
+          if (state.user && state.user.name) {
+            if (headerBtn) headerBtn.textContent = '👤 ' + state.user.name;
+            if (nameInput && !nameInput.value) nameInput.value = state.user.name;
+            if (bandSelect && state.user.targetBand) bandSelect.value = state.user.targetBand;
+            if (modSelect && state.user.module) modSelect.value = state.user.module;
+            if (badgeBox) badgeBox.classList.remove('hidden');
+            if (summaryEl) {
+              summaryEl.textContent = 'Name: ' + state.user.name + ' • Target Band: ' + (state.user.targetBand || '7.0') + ' (' + (state.user.module || 'Academic') + ')';
+            }
+          } else {
+            if (headerBtn) headerBtn.textContent = 'Create Account';
+            if (badgeBox) badgeBox.classList.add('hidden');
+          }
+        }
+
+        document.getElementById('google-signin-action-btn')?.addEventListener('click', function () {
+          const nameInput = document.getElementById('account-name-input');
+          const bandSelect = document.getElementById('account-band-select');
+          const modSelect = document.getElementById('account-module-select');
+          const enteredName = (nameInput?.value || '').trim() || 'IELTS Learner';
+          const selectedBand = bandSelect?.value || '7.0';
+          const selectedMod = modSelect?.value || 'Academic';
+
+          state.user = {
+            id: 'local-learner-' + Date.now(),
+            name: enteredName,
+            targetBand: selectedBand,
+            module: selectedMod
+          };
+          state.planConfig.targetBand = selectedBand;
+          state.planConfig.module = selectedMod;
+          saveState();
+          updateAuthUI();
+          renderDashboard();
+          showToast('✓ Account created & saved for ' + enteredName + '!');
+          switchView('dashboard');
+        });
+
+        document.getElementById('delete-account-data-btn')?.addEventListener('click', function () {
+          localStorage.removeItem(STORAGE_KEY);
+          localStorage.removeItem(THEME_STORAGE_KEY);
+          state = JSON.parse(JSON.stringify(defaultState));
+          const nameInput = document.getElementById('account-name-input');
+          if (nameInput) nameInput.value = '';
+          applyTheme('default');
+          buildDeterministicRoutine();
+          updateAuthUI();
+          renderDashboard();
+          showToast('🗑️ Account reset & saved progress cleared.');
+          switchView('home');
+        });
+
+        updateAuthUI();
+      }
+
+      // ---------- 17. INITIALIZE APPLICATION ----------
+      function init() {
+        applyTheme(state.theme);
+        applyLanguage();
+        renderReadingMiniQuiz();
+        renderSpokenLessons('all');
+        renderVocabFlashcards();
+        renderYouTubeCatalog();
+        renderPracticeQuiz();
+        buildDeterministicRoutine();
+        renderPlannerTasks();
+        renderFreeLibrary();
+        renderSavedWritingDrafts();
+
+        const editor = document.getElementById('writing-editor');
+        if (editor && state.writingDraftText) {
+          editor.value = state.writingDraftText;
+          updateWritingCounters();
+        }
+
+        initEventListeners();
+        switchView(state.currentView || 'home');
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    })();
+  </script>
+</body>
+</html>
