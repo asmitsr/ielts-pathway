@@ -1,0 +1,13 @@
+// DRAFT — Phase 2 only. Not used by v1 (v1 uses browser localStorage only).
+// Deploy only after Firebase Auth (Google) is enabled, and test in the Rules Playground.
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{uid}/{document=**} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

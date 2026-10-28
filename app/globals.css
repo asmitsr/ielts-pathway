@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-forest: #064734;
+  --color-leaf: #e0ffc2;
+  --color-gold: #d6b84a;
+  --color-ink: #090d10;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Hind Siliguri", "Noto Sans Bengali", "Segoe UI", system-ui, sans-serif;
+}
+
+:focus-visible {
+  outline: 3px solid #d6b84a;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
